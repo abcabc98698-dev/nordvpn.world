@@ -20,6 +20,10 @@ User-agent: yisouspider
 Allow: /
 Disallow: /elements/
 
+User-agent: Yandex
+Allow: /
+Disallow: /elements/
+
 # Sitemap
 Sitemap: https://nordvpn.world/sitemap.xml
 Sitemap: https://nordvpn.world/sitemap-index.xml

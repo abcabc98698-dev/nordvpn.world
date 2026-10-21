@@ -34,6 +34,7 @@ export const siteConfig = {
 		bing: import.meta.env.PUBLIC_BING_SITE_VERIFICATION || "",
 		shenma: import.meta.env.PUBLIC_SHENMA_SITE_VERIFICATION || "",
 		baidu: import.meta.env.PUBLIC_BAIDU_SITE_VERIFICATION || "",
+		yandex: import.meta.env.PUBLIC_YANDEX_SITE_VERIFICATION || "",
 	},
 };
 
