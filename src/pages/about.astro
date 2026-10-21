@@ -1,0 +1,166 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import { ArrowRight, ShieldCheck, Zap, Server, Award, Check } from "@lucide/astro";
+
+const timeline = [
+  {
+    version: "2020 创立与启航",
+    date: "2020 年初",
+    title: "部署第一代跨国 IPLC 骨干企业专线",
+    desc: "致力于为跨境电商外贸团队与海外商务人士提供不走公网的优质内网专线，攻克晚高峰公网国际出口拥堵难题。",
+  },
+  {
+    version: "2021 架构革新",
+    date: "2021 年",
+    title: "推行全节点 ×1 真实倍率与无限制设备",
+    desc: "业内率先取消复杂的倍率套路扣费，推行全节点 ×1 原生专线，彻底放开同时在线设备数量限制，满足多设备协同。",
+  },
+  {
+    version: "2022 协议升级",
+    date: "2022 年",
+    title: "全面接入轻量抗干扰 VLESS 协议",
+    desc: "针对网络环境深度包检测干扰，率先全网升级至 VLESS + TLS 1.3 现代加密架构，连接建立速度提升 40%，长时在线更稳定。",
+  },
+  {
+    version: "2023 矩阵完善",
+    date: "2023 年",
+    title: "发布全平台自研客户端与永久套餐",
+    desc: "推出 Windows / macOS / Android / iOS 官方自研客户端，同时推出备受好评的“致敬斯诺克147永久套餐”，满足用户长久备用刚需。",
+  },
+  {
+    version: "2024+ 峰值跃升",
+    date: "至今",
+    title: "单节点最高 2.5Gbps 与 AI / 4K 原生支持",
+    desc: "核心骨干带宽全面跃升至 2.5Gbps，全节点深度优化 ChatGPT、Claude 3.5 与 TikTok 全球直播原生支持，SLA 可用率达 99.98%。",
+  },
+];
+---
+
+<Layout
+  title="关于我们与官方授权说明 — NordVPN 官方专线网络"
+  description="了解 NordVPN（nordvpn.world）品牌官网历史与服务理念：始于2020年，专注企业级 IEPL/IPLC 跨境网络加速，获得品牌官方授权，提供真实、透明、高可用的专线网络体验。"
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="关于 NordVPN 与品牌官方授权"
+      description="始于 2020 年的稳健运营积淀。以企业级 IEPL/IPLC 专线与原生 VLESS 协议，为跨境商务、AI 研发与超清互联提供稳健底座。"
+    />
+  </section>
+
+  <section class="site-container max-w-4xl mx-auto pb-24">
+    <article class="space-y-12">
+
+      <!-- Official Authorization Statement -->
+      <div class="p-6 md:p-8 rounded-2xl border-2 border-primary/30 bg-primary/[0.03] dark:bg-primary/[0.06] shadow-sm" data-aos="fade-up-xs" data-aos-once="true">
+        <div class="flex items-center gap-2 text-primary font-bold text-sm mb-3">
+          <ShieldCheck class="w-5 h-5 text-primary" />
+          <span>官方品牌授权与服务落地声明</span>
+        </div>
+        <h2 class="text-xl md:text-2xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+          本网站属于品牌方获得官方授权的独立品牌官网与服务中心
+        </h2>
+        <div class="space-y-3 text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          <p>
+            本平台（<span class="font-medium text-neutral-800 dark:text-neutral-200">nordvpn.world</span>）为品牌方官方授权建设的品牌官网落地页与客户服务枢纽。我们严格恪守品牌方的安全服务标准与合规准则，旨在为大中华区及亚太区跨境出海企业、学术研究机构及个人高端用户提供稳定可信的企业专线接入通道。
+          </p>
+          <p>
+            <strong>承诺与准则：</strong>本项目绝不建设任何第三方机场评测导航、不制造假评分假评论、不设置竞品跳转，全心全意提供纯粹、透明、可靠的官方产品与技术咨询。
+          </p>
+        </div>
+      </div>
+
+      <!-- Core Pillars -->
+      <div data-aos="fade-up-xs" data-aos-once="true">
+        <h2 class="text-2xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-6">我们的三大核心立足点</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-5 rounded-xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">
+            <Zap class="w-6 h-6 text-primary mb-3" />
+            <h3 class="font-bold text-base text-neutral-800 dark:text-neutral-100 mb-2">真专线，无套路</h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              坚持采用 IEPL / IPLC 内网专线传输，拒绝用廉价公网中转冒充专线，晚高峰 0 丢包。
+            </p>
+          </div>
+          <div class="p-5 rounded-xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">
+            <Server class="w-6 h-6 text-emerald-500 mb-3" />
+            <h3 class="font-bold text-base text-neutral-800 dark:text-neutral-100 mb-2">真数据，真倍率</h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              全节点 ×1 真实计费，不设扣费陷阱；不虚构运营数据与夸大节点数量，保障透明体验。
+            </p>
+          </div>
+          <div class="p-5 rounded-xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">
+            <ShieldCheck class="w-6 h-6 text-blue-500 mb-3" />
+            <h3 class="font-bold text-base text-neutral-800 dark:text-neutral-100 mb-2">真服务，全适配</h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              既提供自研客户端让新手一秒上手，又支持通用订阅导入专业工具，7×24 客服守候。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Level Agreement (SLA) -->
+      <div id="sla" class="scroll-mt-24 p-6 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary dark:bg-bg-secondary-dark" data-aos="fade-up-xs" data-aos-once="true">
+        <h2 class="text-xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+          <Award class="w-5 h-5 text-primary" />
+          SLA 晚高峰稳定性保障协议
+        </h2>
+        <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-4">
+          我们深知跨境电商、直播推流与外贸商业对网络可用性的严苛要求。NordVPN 基础设施向所有付费用户承诺以下服务质量协议 (Service Level Agreement)：
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-neutral-600 dark:text-neutral-400">
+          <div class="flex items-start gap-2">
+            <Check class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" stroke-width={2.5} />
+            <span><strong>99.98% 专线可用率：</strong>全球 IPLC/IEPL 核心专线双路由热备</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <Check class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" stroke-width={2.5} />
+            <span><strong>晚高峰抖动控制：</strong>港台日新骨干专线 Jitter 控制在 2ms 以内</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <Check class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" stroke-width={2.5} />
+            <span><strong>全节点 1 倍率：</strong>全网节点均以 1.0x 真实扣除流量，无额外加收</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <Check class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" stroke-width={2.5} />
+            <span><strong>7×24 极速客服响应：</strong>官方 Telegram 与控制台工单随时提供技术支持</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Operations Timeline -->
+      <div data-aos="fade-up-xs" data-aos-once="true">
+        <h2 class="text-2xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-6">品牌成长与专线演进历程</h2>
+        <div class="space-y-6 border-l-2 border-primary/20 dark:border-neutral-700 pl-6 ml-3">
+          {timeline.map((item) => (
+            <div class="relative">
+              <div class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-primary border-2 border-white dark:border-neutral-900"></div>
+              <div class="flex items-center gap-3 mb-1">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded bg-primary/10 text-primary">{item.version}</span>
+                <span class="text-xs text-neutral-400 font-mono">{item.date}</span>
+              </div>
+              <h3 class="text-base font-bold text-neutral-800 dark:text-neutral-100 mb-1">{item.title}</h3>
+              <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="pt-6 text-center" data-aos="fade-up-xs" data-aos-once="true">
+        <Button
+          url={siteConfig.registerUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          type="fill"
+          className="text-base px-8 py-3.5 mx-auto font-bold"
+        >
+          <span>立即开通 NordVPN 官方专线</span>
+          <ArrowRight class="w-4 h-4 ml-1" />
+        </Button>
+      </div>
+
+    </article>
+  </section>
+</Layout>

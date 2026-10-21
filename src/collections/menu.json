@@ -1,0 +1,34 @@
+[
+	{
+		"name": "首页",
+		"url": "/"
+	},
+	{
+		"name": "套餐选购",
+		"url": "/#pricing"
+	},
+	{
+		"name": "专线优势",
+		"url": "/features"
+	},
+	{
+		"name": "使用教程",
+		"url": "/#setup"
+	},
+	{
+		"name": "常见问题",
+		"url": "/#faq"
+	},
+	{
+		"name": "品牌与指南",
+		"children": [
+			{ "name": "官方授权说明", "url": "/about" },
+			{ "name": "客户技术支持", "url": "/contact" },
+			{ "name": "网络状态监控", "url": "/status" },
+			{ "name": "知识库与教程", "url": "/blog" },
+			{ "name": "服务保障更新", "url": "/changelog" },
+			{ "name": "服务条款", "url": "/terms" },
+			{ "name": "隐私权保护", "url": "/privacy" }
+		]
+	}
+]

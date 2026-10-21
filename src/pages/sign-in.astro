@@ -1,0 +1,125 @@
+---
+import { ArrowRight, ShieldCheck, Zap, Lock, Globe, Check } from "@lucide/astro";
+import Layout from "@/layouts/Layout.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+---
+
+<Layout
+  title="登录官方专线控制台 — NordVPN 全球专线网络"
+  description="登录 NordVPN 官方专线网络用户控制台，管理套餐订阅、获取最新节点配置、下载自研客户端及查看实时专线状态。"
+>
+  <main class="site-container py-12 md:py-20">
+    <section class="grid min-h-[calc(100vh-18rem)] items-center gap-8 lg:grid-cols-[minmax(420px,1.05fr)_minmax(0,0.95fr)] max-w-5xl mx-auto">
+      <!-- Left: Login Gateway Card -->
+      <div
+        class="mx-auto w-full max-w-md lg:order-first"
+        data-aos="fade-up-xs"
+        data-aos-once="true"
+      >
+        <div class="rounded-2xl border border-primary/20 bg-bg-secondary/90 p-6 shadow-xl backdrop-blur dark:border-neutral-700 dark:bg-bg-secondary-dark/90 sm:p-8">
+          <div class="mb-6">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-primary/10 text-primary">
+              <ShieldCheck class="w-3.5 h-3.5" /> 官方控制台登录
+            </span>
+            <h1 class="mt-3 font-brand text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">登录用户控制中心</h1>
+            <p class="mt-2 text-xs sm:text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+              访问 NordVPN 统一客户控制台，管理您的订阅与节点服务。
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <Button
+              url={siteConfig.registerUrl}
+              target="_blank"
+              rel="nofollow sponsored noopener noreferrer"
+              type="fill"
+              className="w-full justify-center text-base py-3.5 font-bold shadow-lg"
+            >
+              <span>前往官方控制台登录</span>
+              <ArrowRight class="w-4 h-4 ml-1" />
+            </Button>
+
+            <p class="text-[11px] text-center text-neutral-400 dark:text-neutral-500">
+              安全直连 · 官方授权认证控制中心
+            </p>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-dashed border-primary/15 dark:border-neutral-700 text-center">
+            <p class="text-xs text-neutral-500 dark:text-neutral-400">
+              还没有账号？
+              <a
+                href={siteConfig.registerUrl}
+                target="_blank"
+                rel="nofollow sponsored noopener noreferrer"
+                class="font-medium text-primary hover:underline ml-1"
+              >
+                立即免费注册开通
+              </a>
+            </p>
+            <div class="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-neutral-100 dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700 text-xs">
+              <span class="text-neutral-500">官方邀请码:</span>
+              <span class="font-mono font-bold text-primary dark:text-primary-light">{siteConfig.inviteCode}</span>
+              <button
+                type="button"
+                class="invite-copy-btn ml-1 text-primary dark:text-primary-light font-semibold hover:underline"
+                data-code={siteConfig.inviteCode}
+              >
+                <span class="copy-hint">复制</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Service quick guide -->
+      <div
+        class="rounded-2xl border border-primary/15 bg-gradient-to-br from-bg-secondary via-primary/[0.03] to-bg-secondary p-6 sm:p-8 dark:border-neutral-700 dark:bg-bg-secondary-dark"
+        data-aos="fade-left-sm"
+        data-aos-once="true"
+      >
+        <p class="text-xs font-semibold uppercase tracking-wider text-primary">CLIENT SERVICES</p>
+        <h2 class="mt-2 font-brand text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+          控制台便捷功能一览
+        </h2>
+
+        <div class="mt-6 space-y-4 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300">
+          <div class="flex items-start gap-3">
+            <div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+              <Zap class="w-4 h-4" />
+            </div>
+            <div>
+              <strong class="text-neutral-800 dark:text-neutral-100 block">一键复制与导入订阅</strong>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">支持一键导入 Clash、Shadowrocket、Sing-box，实时同步最新专线节点。</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <Globe class="w-4 h-4" />
+            </div>
+            <div>
+              <strong class="text-neutral-800 dark:text-neutral-100 block">全平台自研客户端下载</strong>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">提供 Windows、macOS、iOS、Android 官方自研客户端极速下载。</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <Lock class="w-4 h-4" />
+            </div>
+            <div>
+              <strong class="text-neutral-800 dark:text-neutral-100 block">套餐流量与续费管理</strong>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">实时查询剩余流量、套餐到期时间及快速续费享受年付 8 折优惠。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-5 border-t border-dashed border-primary/15 dark:border-neutral-700 flex items-center gap-2 text-xs text-neutral-500">
+          <Check class="w-4 h-4 text-emerald-500" stroke-width={2.5} />
+          <span>7×24 官方客服在线工单响应</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

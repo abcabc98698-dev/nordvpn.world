@@ -1,0 +1,139 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import { Clock, Activity, ArrowRight, Check } from "@lucide/astro";
+
+const systems = [
+  { name: "香港 IEPL 专线集群 (20+ 节点)", status: "正常运行", ping: "22ms", load: "34%", uptime: "99.99%" },
+  { name: "日本 IPLC 原生专线 (10+ 节点)", status: "正常运行", ping: "42ms", load: "41%", uptime: "99.98%" },
+  { name: "新加坡国际骨干专线 (10+ 节点)", status: "正常运行", ping: "56ms", load: "28%", uptime: "99.99%" },
+  { name: "美国原生住宅/企业专线 (10+ 节点)", status: "正常运行", ping: "125ms", load: "46%", uptime: "99.97%" },
+  { name: "台湾原生低延迟节点 (5+ 节点)", status: "正常运行", ping: "38ms", load: "31%", uptime: "99.99%" },
+  { name: "欧洲核心专线 (英/德/法等)", status: "正常运行", ping: "142ms", load: "22%", uptime: "99.98%" },
+  { name: "VLESS + TLS1.3 协议接入网关", status: "正常运行", ping: "<5ms", load: "19%", uptime: "100.00%" },
+  { name: "自研客户端 API & 通用订阅同步分发", status: "正常运行", ping: "<10ms", load: "25%", uptime: "99.99%" },
+];
+
+const pastIncidents = [
+  {
+    date: "2026年10月15日",
+    title: "香港-日本第二备用海底光缆计划内定期巡检与割接",
+    desc: "已于北京时间 03:00–04:30 顺利完成主备光缆切换，全网 IPLC 流量已无感平滑切换至热备路由，用户无感知断连。",
+    resolved: true,
+  },
+  {
+    date: "2026年9月28日",
+    title: "美国西海岸机房大带宽扩容，单节点峰值升级至 2.5Gbps",
+    desc: "针对 ChatGPT 与海外 AI 突发峰值请求，完成洛杉矶与圣何塞集群核心交换机扩容，AI 响应速度进一步提升。",
+    resolved: true,
+  }
+];
+---
+
+<Layout
+  title="集群网络实时运行状态 — NordVPN 官方专线监控"
+  description="实时监控 NordVPN 全球 IEPL/IPLC 专线集群、原生节点、VLESS 协议网关及订阅分发服务的健康度与可用率。SLA 稳定保障 99.98%。"
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="网络集群实时运行状态"
+      description="全天候自动化探测全球专线节点与服务基础设施健康度，坚持透明、公开、真实的运行监控。"
+    />
+  </section>
+
+  <section class="site-container max-w-4xl mx-auto pb-24">
+    <!-- Overall Status Banner -->
+    <div class="p-6 md:p-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.04] dark:bg-emerald-500/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 shadow-sm" data-aos="fade-up-xs" data-aos-once="true">
+      <div class="flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center flex-shrink-0">
+          <Check class="w-6 h-6" stroke-width={2.5} />
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">全部专线节点与服务集群均正常运行</h2>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">最近 90 天综合可用率：<strong class="text-emerald-600 dark:text-emerald-400">99.98%</strong> • 晚高峰 0 丢包</p>
+        </div>
+      </div>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        LIVE MONITOR
+      </span>
+    </div>
+
+    <!-- Cluster List Table -->
+    <div class="rounded-2xl border border-primary/15 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark overflow-hidden mb-12 shadow-sm" data-aos="fade-up-xs" data-aos-once="true">
+      <div class="p-5 border-b border-dashed border-primary/15 dark:border-neutral-700 flex items-center justify-between">
+        <h3 class="font-bold text-base text-neutral-800 dark:text-neutral-100 flex items-center gap-2">
+          <Activity class="w-4 h-4 text-primary" />
+          基础设施节点状态列表
+        </h3>
+        <span class="text-xs text-neutral-400">实时探测频率：30秒/次</span>
+      </div>
+
+      <div class="divide-y divide-dashed divide-primary/10 dark:divide-neutral-700/60 text-xs sm:text-sm">
+        {systems.map((item) => (
+          <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-primary/[0.02] dark:hover:bg-primary/[0.04] transition-colors">
+            <div>
+              <div class="font-semibold text-neutral-800 dark:text-neutral-100">{item.name}</div>
+              <div class="text-xs text-neutral-400 mt-1 flex items-center gap-3 font-mono">
+                <span>时延: <strong class="text-neutral-600 dark:text-neutral-300">{item.ping}</strong></span>
+                <span>•</span>
+                <span>当前负载: <strong class="text-neutral-600 dark:text-neutral-300">{item.load}</strong></span>
+                <span>•</span>
+                <span>月度SLA: <strong class="text-emerald-500">{item.uptime}</strong></span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400">{item.status}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Maintenance and Incident History -->
+    <div class="mb-12" data-aos="fade-up-xs" data-aos-once="true">
+      <h3 class="text-xl font-brand font-bold text-neutral-800 dark:text-neutral-100 mb-4 flex items-center gap-2">
+        <Clock class="w-5 h-5 text-neutral-500" />
+        近期巡检与维护日志
+      </h3>
+      <div class="space-y-4">
+        {pastIncidents.map((inc) => (
+          <div class="p-5 rounded-xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-bold text-sm text-neutral-800 dark:text-neutral-100">{inc.title}</h4>
+              <span class="text-xs text-neutral-400 font-mono">{inc.date}</span>
+            </div>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed mb-2">
+              {inc.desc}
+            </p>
+            <span class="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+              <Check class="w-3.5 h-3.5" /> 已顺利完成并恢复正常
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Bottom register button -->
+    <div class="text-center p-8 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary/40 dark:bg-bg-secondary-dark/40" data-aos="fade-up-xs" data-aos-once="true">
+      <h3 class="text-xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-2">体验高可用专线网络</h3>
+      <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mb-5">
+        立即开通套餐，享受 99.98% 晚高峰可用率保障与不限设备连接。
+      </p>
+      <Button
+        url={siteConfig.registerUrl}
+        target="_blank"
+        rel="nofollow sponsored noopener noreferrer"
+        type="fill"
+        className="text-sm px-6 py-3 mx-auto font-bold"
+      >
+        <span>前往官方注册开通</span>
+        <ArrowRight class="w-4 h-4 ml-1" />
+      </Button>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,205 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import {
+  Zap, Lock, ShieldCheck, Globe, Laptop,
+  ArrowRight, Check, Cpu
+} from "@lucide/astro";
+
+const featureModules = [
+  {
+    icon: Zap,
+    title: "企业级 IEPL / IPLC 专线骨干",
+    desc: "采用国内端点直接接入跨境企业海底光缆专线，不经过公网国际出口路由器。无论晚高峰晚间 20:00~23:30 国际出口公网多么拥挤，NordVPN 专线链路始终稳定通畅，丢包率始终保持在 0.05% 以下。",
+    points: [
+      "跨国内网直达海外核心机房",
+      "全节点单节点最高 2.5Gbps 超大专线带宽",
+      "网络抖动 (Jitter) 低于 2ms，告别卡顿",
+      "99.98% 晚高峰高可用 SLA 保障",
+    ],
+    direction: "left",
+  },
+  {
+    icon: Lock,
+    title: "新一代轻量抗封锁 VLESS 协议",
+    desc: "抛弃传统臃肿协议，全面拥抱 VLESS 架构。VLESS 协议大幅精简握手包结构，配合标准 TLS 1.3 现代加密协议，使数据流与普通企业 HTTPS 流量完全无异，彻底抵御 GFW 深度包检测 (DPI) 干扰。",
+    points: [
+      "零额外冗余握手，连接延迟降低 40%",
+      "高度拟真 TLS 1.3 流量特征",
+      "更低客户端与移动端 CPU/内存能耗",
+      "长连接持久保持，网络切换不掉线",
+    ],
+    direction: "right",
+  },
+  {
+    icon: ShieldCheck,
+    title: "跨境电商与社媒运营原生纯净 IP",
+    desc: "严选海外本土原生 ISP / 住宅与企业机房 IP 地址，非广播伪原生。彻底解决亚马逊 (Amazon)、eBay、PayPal、TikTok Shop 登录遭遇异地风控、二审与关联封店风险。",
+    points: [
+      "支持香港、日本、美国、新加坡原生节点",
+      "高信誉度 IP 库，告别繁琐 Cloudflare 人机验证",
+      "TikTok 全球直播推流低延时不降码率",
+      "企业定制版支持专属独享独立 IP 绑定",
+    ],
+    direction: "left",
+  },
+  {
+    icon: Cpu,
+    title: "全主流海外 AI 生产力无缝加速",
+    desc: "专为科研人员、外贸业务与 AI 从业者打造。深度适配 OpenAI (ChatGPT/GPT-4o/o1)、Anthropic (Claude 3.5 Sonnet)、Midjourney、Google Gemini 等海外 AI 平台，全天候极速稳定调用。",
+    points: [
+      "全节点优化 AI 路由策略，告别“Access Denied”",
+      "Web 网页版与 API 开发者高并发接口全兼容",
+      "超快首字返回速度 (TTFT)，流畅文本生成",
+      "Midjourney 高分辨率图像与多媒体极速生成",
+    ],
+    direction: "right",
+  },
+  {
+    icon: Laptop,
+    title: "全平台自研客户端 + 通用订阅双轨支持",
+    desc: "提供简易直观的官方自研客户端，Windows / macOS / Android / iOS 一键登录即连；同时开放标准订阅接口，支持一键导入 Clash、Shadowrocket、Sing-box、Surge、v2rayN 等专业工具。",
+    points: [
+      "官方自研客户端零配置上手，适合新手用户",
+      "支持 Clash / Shadowrocket 订阅一键同步与更新",
+      "智能分流规则：国内流量直连，海外流量走专线",
+      "控制台提供图文与视频配置向导",
+    ],
+    direction: "left",
+  },
+  {
+    icon: Globe,
+    title: "全系套餐不限设备 + 7×24 运维保障",
+    desc: "彻底打破传统网络服务按设备计费的壁垒。个人手机、平板、笔电、家庭软路由与团队办公设备均可同时在线；自动化网络故障监控系统秒级切换容灾节点，保障业务永不离线。",
+    points: [
+      "全套餐不限制同时在线设备数量",
+      "全节点 ×1 倍率计费，绝无扣费陷阱",
+      "自动化健康探测与故障自愈系统",
+      "7×24 官方客服工单与技术支持社群",
+    ],
+    direction: "right",
+  },
+];
+---
+
+<Layout
+  title="专线技术优势与架构特性 — NordVPN 官方专线网络"
+  description="深度解析 NordVPN 企业专线核心架构：IEPL/IPLC 跨境专线传输、VLESS 轻量抗干扰协议、原生住宅 IP 电商防风控、AI 全面加速及不限设备支持。"
+>
+  <!-- Page Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="专线级网络架构，重新定义稳定出海"
+      description="从底层专线、加密协议到客户端生态，为高要求出海业务与高阶生产力提供坚不可摧的网络底座。"
+    />
+  </section>
+
+  <!-- Detailed Feature Modules Alternating Layout -->
+  <section class="site-container pb-20">
+    <div class="space-y-16 md:space-y-24 max-w-5xl mx-auto">
+      {featureModules.map((module, i) => (
+        <div
+          class={`flex flex-col lg:flex-row items-center gap-10 md:gap-14 ${
+            module.direction === 'right' ? 'lg:flex-row-reverse' : ''
+          }`}
+          data-aos="fade-up-sm"
+          data-aos-delay={i * 80}
+          data-aos-once="true"
+        >
+          <!-- Left/Right Text Content -->
+          <div class="w-full lg:w-1/2">
+            <div class="w-12 h-12 rounded-xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center mb-5">
+              <module.icon class="w-6 h-6" stroke-width={2} />
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+              {module.title}
+            </h2>
+
+            <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
+              {module.desc}
+            </p>
+
+            <ul class="space-y-3">
+              {module.points.map((pt) => (
+                <li class="flex items-start gap-2.5 text-sm text-neutral-700 dark:text-neutral-200">
+                  <Check class="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" stroke-width={2.5} />
+                  <span>{pt}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Feature Visual Card -->
+          <div class="w-full lg:w-1/2">
+            <div class="p-8 rounded-3xl border border-primary/20 dark:border-neutral-700 bg-gradient-to-br from-bg-secondary to-primary/[0.04] dark:from-bg-secondary-dark dark:to-primary/[0.08] shadow-lg">
+              <div class="flex items-center justify-between pb-4 border-b border-dashed border-primary/15 dark:border-neutral-700 mb-6">
+                <span class="text-xs font-semibold text-primary uppercase tracking-wider">
+                  NORDVPN ARCHITECTURE
+                </span>
+                <span class="text-xs font-mono text-emerald-500 font-medium">99.98% SLA ACTIVE</span>
+              </div>
+
+              <div class="space-y-4">
+                <div class="p-4 rounded-xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary/70 dark:bg-bg-secondary-dark/70">
+                  <div class="flex justify-between items-center text-xs font-medium mb-1.5 text-neutral-500">
+                    <span>专线网络实时吞吐</span>
+                    <span class="text-neutral-800 dark:text-neutral-200 font-mono">2.5 Gbps Peak</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
+                    <div class="h-full bg-primary rounded-full w-4/5 animate-pulse"></div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                  <div class="p-3 rounded-lg border border-primary/10 dark:border-neutral-700 bg-bg-secondary/70 dark:bg-bg-secondary-dark/70">
+                    <span class="text-neutral-400 block mb-1">传输协议</span>
+                    <span class="font-bold text-neutral-800 dark:text-neutral-100 font-mono">VLESS + TLS1.3</span>
+                  </div>
+                  <div class="p-3 rounded-lg border border-primary/10 dark:border-neutral-700 bg-bg-secondary/70 dark:bg-bg-secondary-dark/70">
+                    <span class="text-neutral-400 block mb-1">并发设备</span>
+                    <span class="font-bold text-emerald-600 dark:text-emerald-400 font-mono">不限设备连接</span>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-lg border border-primary/10 dark:border-neutral-700 bg-bg-secondary/70 dark:bg-bg-secondary-dark/70 text-xs">
+                  <span class="text-neutral-400 block mb-1">晚高峰保障机制</span>
+                  <span class="text-neutral-700 dark:text-neutral-300">
+                    端到端 IEPL 企业专线，0 丢包，超低时延直达全球核心网络节点
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Final Call to action -->
+    <div class="mt-20 text-center max-w-2xl mx-auto p-8 rounded-3xl border border-dashed border-primary/20 bg-bg-secondary/50 dark:bg-bg-secondary-dark/50" data-aos="fade-up-xs" data-aos-once="true">
+      <h3 class="text-2xl font-brand font-bold text-neutral-900 dark:text-neutral-50 mb-3">
+        即刻选购体验高品质专线
+      </h3>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-6 leading-relaxed">
+        年付低至 8.25 元/月，更有致敬斯诺克 147 永久版与全球 IPLC 极速版。
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <Button
+          url={siteConfig.registerUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          type="fill"
+          className="text-sm px-6 py-3 font-semibold"
+        >
+          <span>立即前往开通</span>
+          <ArrowRight class="w-4 h-4 ml-1" />
+        </Button>
+        <Button url="/pricing" className="text-sm px-6 py-3">
+          <span>查看套餐价格</span>
+        </Button>
+      </div>
+    </div>
+  </section>
+</Layout>

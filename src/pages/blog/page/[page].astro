@@ -1,0 +1,61 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import BlogSection from "@/components/sections/BlogSection.astro";
+import { getCollection } from "astro:content";
+
+export const POSTS_PER_PAGE = 6;
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("post");
+
+  let posts = allPosts.sort(
+    (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+  );
+
+  const featuredPost = posts.find((post) => post.data.featured);
+  if (featuredPost) {
+    posts = posts.filter((post) => post.data.featured !== true);
+  }
+
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+
+  return Array.from({ length: totalPages }, (_, i) => {
+    const page = i + 1;
+    return {
+      params: { page: page.toString() },
+      props: { page: page.toString() }
+    };
+  });
+}
+
+const { page } = Astro.props;
+const currentPage = parseInt(page);
+const canonicalTarget = currentPage === 1 ? "https://nordvpn.world/blog/" : `https://nordvpn.world/blog/page/${currentPage}/`;
+---
+
+<Layout
+  title={`官方知识库与专线教程 (第 ${currentPage} 页) — NordVPN 全球专线网络`}
+  description="探索 VLESS 协议原理解析、跨境电商原生 IP 配置技巧、AI 生产力加速与全平台客户端一键配置指南。"
+  canonical={canonicalTarget}
+>
+  <section class="relative z-20 container mx-auto my-12 px-7 lg:px-0">
+    <PageHeader
+      title="官方知识库与网络专线指南"
+      description="深入探索 IEPL/IPLC 物理专线架构、VLESS 协议调优、跨境电商直播实战及客户端订阅配置教程。"
+    />
+  </section>
+  <section class="relative z-20 mx-auto my-12 px-7 lg:px-0">
+    <div class="mt-8">
+      <BlogSection
+        title="全部指南与技术文章"
+        listPage={true}
+        pagination={{
+          enable: true,
+          currentPage: currentPage
+        }}
+        postsPerPage={POSTS_PER_PAGE}
+      />
+    </div>
+  </section>
+</Layout>

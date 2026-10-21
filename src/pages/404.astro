@@ -1,0 +1,66 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import Button from "@/components/ui/Button.astro";
+import { ArrowLeft, ShieldAlert } from "@lucide/astro";
+import { siteConfig } from "@/config/site";
+---
+
+<PageLayout
+  title="404 页面未找到 — NordVPN 官方专线网络"
+  description="抱歉，您访问的页面不存在或已被移除。请返回 NordVPN 官网首页或选购专线套餐。"
+  noindex={true}
+>
+  <section class="site-container py-14 md:py-24">
+    <div class="grid min-h-[60vh] items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1.05fr)] max-w-5xl mx-auto">
+      <div data-aos="fade-up-xs" data-aos-once="true">
+        <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary dark:border-primary-light/20 dark:bg-primary-light/10 dark:text-primary-light">
+          <ShieldAlert size={14} />
+          Error 404
+        </p>
+
+        <h1 class="max-w-xl font-brand text-4xl leading-tight font-bold text-neutral-900 dark:text-neutral-100 md:text-5xl">
+          抱歉，未能找到该页面
+        </h1>
+
+        <p class="mt-4 max-w-lg text-sm sm:text-base leading-relaxed text-neutral-600 dark:text-neutral-300">
+          您请求的网址可能已失效或输入有误。您可以返回官网首页重新浏览，或前往官方控制台直接管理您的专线订阅。
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button url="/" type="fill" className="text-sm px-6 py-3 font-semibold">
+            <ArrowLeft size={16} /> 返回官网首页
+          </Button>
+          <Button url={siteConfig.registerUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" type="solid" className="text-sm px-6 py-3 font-semibold">
+            登录控制台
+          </Button>
+        </div>
+      </div>
+
+      <div
+        class="relative mx-auto w-full max-w-md"
+        data-aos="fade-up-xs"
+        data-aos-delay="120"
+        data-aos-once="true"
+      >
+        <div class="p-6 rounded-2xl border border-primary/15 bg-bg-secondary dark:bg-bg-secondary-dark shadow-xl text-center">
+          <div class="text-6xl font-brand font-bold text-primary/30 mb-4">404</div>
+          <h2 class="text-base font-bold text-neutral-800 dark:text-neutral-200 mb-2">快速导航指引</h2>
+          <div class="space-y-2 text-xs">
+            <a href="/#pricing" class="block p-2.5 rounded-lg border border-primary/10 hover:border-primary/30 hover:bg-primary/5 transition-colors text-neutral-700 dark:text-neutral-300 font-medium">
+              查看套餐选购与价格 (4大套餐)
+            </a>
+            <a href="/features" class="block p-2.5 rounded-lg border border-primary/10 hover:border-primary/30 hover:bg-primary/5 transition-colors text-neutral-700 dark:text-neutral-300 font-medium">
+              IEPL / IPLC 专线核心优势
+            </a>
+            <a href="/status" class="block p-2.5 rounded-lg border border-primary/10 hover:border-primary/30 hover:bg-primary/5 transition-colors text-neutral-700 dark:text-neutral-300 font-medium">
+              全球专线节点运行状态
+            </a>
+            <a href="/blog" class="block p-2.5 rounded-lg border border-primary/10 hover:border-primary/30 hover:bg-primary/5 transition-colors text-neutral-700 dark:text-neutral-300 font-medium">
+              知识库与客户端配置指南
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>

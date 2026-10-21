@@ -1,0 +1,25 @@
+---
+import SectionHeader from "@/components/elements/SectionHeader.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  items: Array<{ question: string; answer: string }>;
+}
+
+const {
+  title = "常见问题解答 (FAQ)",
+  description = "解答关于专线质量、客户端导入、晚高峰保障与节点使用的核心疑问",
+  items = []
+} = Astro.props;
+---
+
+<section id="faq" class="py-16 md:py-24 site-container scroll-mt-20">
+  <SectionHeader title={title} description={description} />
+  <div class="max-w-3xl mx-auto mt-8">
+    {items.map((item: { question: string; answer: string }, index: number) => (
+      <AccordionItem question={item.question} answer={item.answer} index={index} data-aos="fade-up-xs" data-aos-once="true" data-aos-delay={index * 60} />
+    ))}
+  </div>
+</section>

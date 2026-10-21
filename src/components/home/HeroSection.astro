@@ -1,0 +1,304 @@
+---
+import Button from "@/components/ui/Button.astro";
+import Badge from "@/components/ui/Badge.astro";
+import AnimatedText from "@/components/ui/AnimatedText.astro";
+import BrowserFrame from "@/components/ui/BrowserFrame.astro";
+import { siteConfig } from "@/config/site";
+import { ArrowRight, ShieldCheck, Activity, Globe, Zap, Copy } from "@lucide/astro";
+
+const stats = [
+  { label: "骨干专线时延", value: "21ms", delta: "99.98% 可用率", cycle: ["21ms", "19ms", "22ms", "20ms"] },
+  { label: "单节点峰值带宽", value: "2.5Gbps", delta: "全节点 ×1 倍率", cycle: ["2.5Gbps", "2.4Gbps", "2.5Gbps", "2.5Gbps"] },
+  { label: "同时在线设备", value: "不限设备", delta: "多端协同无阻", cycle: ["不限设备", "全平台适配", "家庭/团队共享", "不限设备"] },
+  { label: "协议加密架构", value: "VLESS", delta: "轻量抗干扰", cycle: ["VLESS", "IEPL 专线", "原生独享", "VLESS"] },
+];
+
+const bars = [42, 68, 55, 88, 76, 95, 84];
+const barCycles = JSON.stringify([
+  [42, 68, 55, 88, 76, 95, 84],
+  [48, 62, 70, 78, 84, 92, 96],
+  [38, 74, 64, 88, 70, 96, 90],
+  [52, 66, 58, 80, 82, 94, 88],
+]);
+---
+
+<div class="relative site-container z-20 w-full mx-auto mt-12 px-4 md:mt-16 lg:mt-24 xl:px-0">
+  <div class="relative w-full px-4 flex flex-col items-center justify-between lg:flex-row mb-14">
+    <!-- Left: Text -->
+    <div class="relative w-full lg:max-w-[560px] lg:w-1/2 text-center lg:text-left sm:-mt-6">
+      <!-- Badges -->
+      <div
+        class="flex flex-wrap gap-2 justify-center lg:justify-start mb-6"
+        data-aos="fade-up-xs"
+        data-aos-delay="100"
+        data-aos-duration="500"
+        data-aos-once="true"
+      >
+        <Badge variant="primary">2020年稳定运营</Badge>
+        <Badge variant="accent">全线 IEPL/IPLC 企业专线</Badge>
+        <Badge variant="neutral">VLESS 协议 · 不限设备</Badge>
+      </div>
+
+      <!-- Title -->
+      <h1 class="mb-5">
+        <AnimatedText
+          content="NordVPN 全球企业级专线网络"
+          delay={0.1}
+          duration={0.5}
+          stagger={0.06}
+          class="text-3xl text-pri leading-tight sm:text-4xl lg:text-5xl font-brand font-bold"
+        />
+      </h1>
+
+      <!-- Subtitle -->
+      <div class="mb-8">
+        <AnimatedText
+          content="专为跨境电商、TikTok 全球直播、AI 生产力及 4K/8K 超清流媒体打造。依托 2020 年以来的专线运营积淀，全节点采用企业级内网 IPLC/IEPL 骨干网，单节点峰值最高 2.5Gbps，自研客户端与主流第三方订阅一键全适配，彻底告别晚高峰丢包与卡顿。"
+          delay={0.3}
+          duration={0.5}
+          stagger={0.01}
+          class="text-base text-neutral-600 dark:text-neutral-300 leading-relaxed"
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div
+        class="flex flex-wrap gap-3 justify-center lg:justify-start"
+        data-aos="fade-up-sm"
+        data-aos-delay="500"
+        data-aos-duration="500"
+        data-aos-once="true"
+      >
+        <Button
+          url={siteConfig.registerUrl}
+          type="fill"
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          className="text-base px-6 py-3 font-semibold"
+        >
+          <span>立即开通体验</span>
+          <ArrowRight size={16} />
+        </Button>
+        <Button url="/#pricing" type="solid" className="text-base px-6 py-3">
+          <span>查看套餐方案</span>
+        </Button>
+      </div>
+
+      <!-- Invite Code Quick Bar -->
+      <div
+        class="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs"
+        data-aos="fade-up-sm"
+        data-aos-delay="550"
+        data-aos-duration="500"
+        data-aos-once="true"
+      >
+        <span class="text-neutral-500 dark:text-neutral-400">官方授权注册邀请码：</span>
+        <button
+          type="button"
+          class="invite-copy-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800/90 text-neutral-800 dark:text-neutral-200 hover:border-primary/50 border border-neutral-300 dark:border-neutral-700 font-mono font-bold tracking-wider cursor-pointer transition-all shadow-sm active:scale-95 group"
+          data-code={siteConfig.inviteCode}
+          title="点击一键复制邀请码"
+        >
+          <span class="text-primary dark:text-primary-light font-extrabold text-sm">{siteConfig.inviteCode}</span>
+          <Copy class="w-3.5 h-3.5 text-neutral-400 group-hover:text-primary transition-colors" />
+          <span class="copy-hint text-[11px] font-normal text-neutral-500 dark:text-neutral-400 ml-0.5">点击复制</span>
+        </button>
+        <span class="text-[11px] text-neutral-400 dark:text-neutral-500">（点击开通系统已自动预填）</span>
+      </div>
+
+      <!-- Feature tags below buttons -->
+      <div class="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+        <span class="flex items-center gap-1.5">
+          <ShieldCheck class="w-4 h-4 text-primary" /> 官方授权品牌落地页
+        </span>
+        <span class="flex items-center gap-1.5">
+          <Zap class="w-4 h-4 text-emerald-500" /> 年付折合低至 ¥8.25/月
+        </span>
+        <span class="flex items-center gap-1.5">
+          <Globe class="w-4 h-4 text-blue-500" /> 支持自研与通用客户端
+        </span>
+      </div>
+    </div>
+
+    <!-- Right: Network Live Node Monitor Mock -->
+    <div
+      class="relative justify-end w-full mt-12 lg:flex lg:pl-8 lg:w-1/2 lg:mt-0"
+      data-aos="fade-left-sm"
+      data-aos-delay="300"
+      data-aos-duration="800"
+      data-aos-once="true"
+    >
+      <BrowserFrame url="nordvpn.world/nodes" className="w-full shadow-2xl">
+        <div class="p-5 md:p-6 h-[330px] md:h-[370px] flex flex-col gap-3.5">
+          <!-- Mock toolbar -->
+          <div class="flex items-center justify-between border-b border-primary/10 dark:border-neutral-700/60 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="hero-live-dot relative w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-xs font-semibold text-neutral-800 dark:text-neutral-200">
+                NordVPN 全球专线网络集群
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">
+                ONLINE 99.98%
+              </span>
+            </div>
+            <div class="flex items-center gap-1.5 text-[11px] text-neutral-400">
+              <span>全节点 ×1 倍率</span>
+            </div>
+          </div>
+
+          <!-- 2x2 Stat grid -->
+          <div class="grid grid-cols-2 gap-3 flex-1">
+            {stats.map((stat, i) => (
+              <div class="rounded-lg border border-primary/10 dark:border-neutral-700/80 bg-bg-primary/50 dark:bg-neutral-800/40 p-3 flex flex-col justify-between">
+                <span class="text-[10px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400 font-medium">{stat.label}</span>
+                <div class="flex items-end justify-between mt-1">
+                  <span
+                    class="hero-stat-value text-lg md:text-xl font-brand font-bold text-neutral-900 dark:text-neutral-100 leading-none"
+                    data-cycle={stat.cycle.join("|")}
+                    style={`animation-delay: ${i * 400}ms;`}
+                  >{stat.value}</span>
+                  <span
+                    class="hero-delta text-[10px] font-medium text-emerald-600 dark:text-emerald-400"
+                    style={`animation-delay: ${i * 600}ms;`}
+                  >{stat.delta}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Live Network Throughput bar -->
+          <div class="rounded-lg border border-primary/10 dark:border-neutral-700/80 bg-bg-primary/50 dark:bg-neutral-800/40 p-3">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-1.5">
+                <Activity class="w-3.5 h-3.5 text-primary" />
+                <span class="text-[10px] uppercase tracking-wider text-neutral-600 dark:text-neutral-300 font-semibold">
+                  专线实时吞吐与低延迟表现 (Live Peak: 2.5 Gbps)
+                </span>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-500 font-medium">0 Packet Loss</span>
+            </div>
+            <div
+              class="flex items-end gap-1.5 h-10 hero-bars"
+              data-bar-cycles={barCycles}
+            >
+              {bars.map((h, i) => (
+                <div
+                  class:list={[
+                    "hero-bar flex-1 rounded-sm origin-bottom",
+                    i === bars.length - 1 ? "bg-primary hero-bar-active" : "bg-primary/30 dark:bg-primary/40",
+                  ]}
+                  style={`--bar-h: ${h}%; height: ${h}%; animation-delay: ${i * 90}ms;`}
+                ></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </BrowserFrame>
+    </div>
+  </div>
+</div>
+
+<style>
+  .hero-live-dot::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: currentColor;
+    color: rgb(16, 185, 129);
+    animation: hero-live-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @keyframes hero-live-ping {
+    0%   { transform: scale(1);   opacity: 0.7; }
+    80%, 100% { transform: scale(3); opacity: 0; }
+  }
+
+  .hero-stat-value {
+    transition: opacity 200ms ease, transform 200ms ease;
+    display: inline-block;
+  }
+  .hero-stat-value.is-flashing {
+    opacity: 0.35;
+    transform: translateY(2px);
+  }
+
+  .hero-delta {
+    animation: hero-delta-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes hero-delta-pulse {
+    0%, 100% { opacity: 1;   filter: drop-shadow(0 0 0 transparent); }
+    50%      { opacity: 0.65; filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.5)); }
+  }
+
+  .hero-bar {
+    animation: hero-bar-rise 700ms cubic-bezier(0.4, 0, 0.2, 1) backwards;
+    transition: height 900ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @keyframes hero-bar-rise {
+    from { height: 0 !important; opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .hero-bar-active {
+    animation:
+      hero-bar-rise 700ms cubic-bezier(0.4, 0, 0.2, 1) backwards,
+      hero-bar-glow 2.6s ease-in-out 1.2s infinite;
+  }
+  @keyframes hero-bar-glow {
+    0%, 100% { transform: scaleY(1);    filter: brightness(1); }
+    50%      { transform: scaleY(0.93); filter: brightness(1.15); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-live-dot::before,
+    .hero-delta,
+    .hero-bar,
+    .hero-bar-active,
+    .hero-stat-value {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.hero-stat-value').forEach((el, i) => {
+    const cycleAttr = el.dataset.cycle;
+    if (!cycleAttr) return;
+    const values = cycleAttr.split('|');
+    if (values.length < 2) return;
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % values.length;
+      el.classList.add('is-flashing');
+      window.setTimeout(() => {
+        el.textContent = values[idx];
+        el.classList.remove('is-flashing');
+      }, 200);
+    }, 3200 + i * 700);
+  });
+
+  const heroBarsHost = document.querySelector<HTMLElement>('.hero-bars');
+  const heroBars = document.querySelectorAll<HTMLElement>('.hero-bar');
+  if (heroBarsHost && heroBars.length > 0) {
+    try {
+      const cycles = JSON.parse(heroBarsHost.dataset.barCycles || '[]') as number[][];
+      if (cycles.length > 1) {
+        let cycleIdx = 0;
+        window.setTimeout(() => {
+          window.setInterval(() => {
+            cycleIdx = (cycleIdx + 1) % cycles.length;
+            const next = cycles[cycleIdx];
+            heroBars.forEach((b, i) => {
+              if (typeof next[i] === 'number') {
+                b.style.height = `${next[i]}%`;
+              }
+            });
+          }, 2400);
+        }, 1500);
+      }
+    } catch {
+      /* swallow JSON parse errors silently */
+    }
+  }
+</script>

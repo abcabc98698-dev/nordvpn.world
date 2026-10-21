@@ -1,0 +1,241 @@
+---
+import { getCollection, render } from "astro:content";
+import PostLayout from "@/layouts/PostLayout.astro";
+import Toc from '@/components/widgets/Toc.astro';
+import { siteConfig } from "@/config/site";
+
+// SSG 模式下的动态路由需要使用 getStaticPaths()
+// 来告诉 Astro 在构建时生成哪些页面
+export async function getStaticPaths() {
+	const postEntries = await getCollection("post");
+	return postEntries.map((entry) => {
+		// Content Layer 的 entry.id 是条目的唯一标识符
+		// 对于 [...slug] 路由，需要将 entry.id 转换为 slug 数组
+		// entry.id 已经是相对于集合根目录的路径，例如 "dir/index" 或 "dir"
+		// 注意：对于 [...slug] 路由，params.slug 应该是字符串，Astro 会自动处理
+		const slugString = entry.id;
+		return {
+			params: { slug: slugString },
+			props: { entry },
+		};
+	});
+}
+
+// 使用 [...slug] 路由来处理包含斜杠的路径（官方推荐）
+// entry 由 getStaticPaths 通过 props 传入，无需再从 params 推导 slug
+
+// 从 props 获取 entry（在 SSG 模式下通过 getStaticPaths 传递）
+const { entry } = Astro.props;
+
+// 如果找不到文章，返回 404
+if (!entry) {
+	return Astro.redirect("/404");
+}
+
+const { Content, headings } = await render(entry);
+const filtered = headings.filter(h => h.depth <= 2);
+
+const authorName = entry.data.author || "NordVPN 网络工程安全实验室";
+const postUrl = `${siteConfig.url}/blog/${entry.id}/`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": `${postUrl}#article`,
+      "isPartOf": {
+        "@id": `${siteConfig.url}/#website`
+      },
+      "headline": entry.data.title,
+      "description": entry.data.description,
+      "url": postUrl,
+      "mainEntityOfPage": postUrl,
+      "datePublished": entry.data.publishDate.toISOString(),
+      "dateModified": entry.data.publishDate.toISOString(),
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": authorName,
+        "url": `${siteConfig.url}/about`
+      },
+      "publisher": {
+        "@id": `${siteConfig.url}/#organization`
+      },
+      "image": `${siteConfig.url}${entry.data.img || '/og.jpg'}`
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${postUrl}#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": `${siteConfig.url}/`
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "官方知识库与专线指南",
+          "item": `${siteConfig.url}/blog/`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": entry.data.title,
+          "item": postUrl
+        }
+      ]
+    }
+  ]
+};
+---
+
+<PostLayout title={entry.data.title} description={entry.data.description}>
+	<!-- Structured Data (Article & Breadcrumbs) -->
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+
+	<!-- Reading progress bar -->
+	<div id="reading-progress" class="reading-progress" style="transform: scaleX(0);"></div>
+
+	<div class="post article">
+		<main class="relative site-container mx-auto my-8 md:my-12">
+			<!-- Article header -->
+			<header class="article-header">
+				<!-- Breadcrumbs -->
+				<nav class="mb-4 flex items-center gap-1.5 text-xs text-neutral-400 dark:text-neutral-500" aria-label="Breadcrumb">
+					<a href="/" class="hover:text-primary transition-colors">首页</a>
+					<span>/</span>
+					<a href="/blog" class="hover:text-primary transition-colors">知识库</a>
+					<span>/</span>
+					<span class="text-neutral-600 dark:text-neutral-300 truncate max-w-[200px] sm:max-w-sm">{entry.data.title}</span>
+				</nav>
+
+				<!-- Tags -->
+				<div class="article-tags">
+					{entry.data.tags && entry.data.tags.length > 0 ? (
+						entry.data.tags.map(tag => (
+							<span class="article-tag letter-spacing-wide text-xs">{tag}</span>
+						))
+					) : (
+						<span class="article-tag text-xs">Article</span>
+					)}
+				</div>
+
+				<!-- Title -->
+				<h1 class="article-title font-brand">
+					{entry.data.title}
+				</h1>
+
+				<!-- Metadata & E-E-A-T Author byline -->
+				<div class="article-meta flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-3">
+					<span class="inline-flex items-center gap-1.5 font-medium text-neutral-700 dark:text-neutral-300">
+						<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+						作者：{authorName}
+					</span>
+					<span class="article-meta-divider"></span>
+					<span>审校：官方技术架构组</span>
+					<span class="article-meta-divider"></span>
+					<time datetime={entry.data.publishDate.toISOString()}>
+						发布于 {entry.data.publishDate.toLocaleDateString('zh-CN', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric'
+						})}
+					</time>
+					{entry.data.read && (
+						<>
+							<span class="article-meta-divider"></span>
+							<span>阅读时长约 {entry.data.read} 分钟</span>
+						</>
+					)}
+				</div>
+			</header>
+
+			<!-- Content area -->
+			<div class="relative flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16">
+				<!-- Left TOC - Fixed on desktop -->
+				<aside class="relative hidden lg:block lg:w-40 xl:w-50 flex-shrink-0">
+					<div class="toc-sticky-wrapper">
+						<Toc headings={filtered} />
+					</div>
+				</aside>
+
+				<!-- Article content -->
+				<div class="relative flex-1 min-w-0 w-full lg:max-w-none">
+					<article class="article-wrapper">
+						<div class="article-content">
+							<Content />
+
+							<!-- Official Service and Conversion Box -->
+							<div class="mt-12 p-6 rounded-2xl border border-dashed border-primary/30 bg-bg-secondary/80 dark:bg-bg-secondary-dark/80 not-prose">
+								<div class="flex items-center gap-2 mb-2">
+									<span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+									<span class="text-xs font-bold uppercase tracking-wider text-primary dark:text-primary-light">NordVPN 官方授权专线服务</span>
+								</div>
+								<h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+									体验晚高峰 0 丢包的高品质 IEPL / IPLC 企业专线
+								</h3>
+								<p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-4">
+									本文由 NordVPN 网络工程安全实验室撰写与维护。全节点采用企业级物理专线与轻量 VLESS 协议，最高 2.5Gbps 带宽，不限设备在线，覆盖香港、日本、新加坡、美国等全球原生节点。
+								</p>
+								<div class="flex flex-wrap items-center gap-3">
+									<a
+										href={siteConfig.registerUrl}
+										target="_blank"
+										rel="nofollow sponsored noopener noreferrer"
+										class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-primary text-white text-xs sm:text-sm font-semibold hover:bg-primary-hover shadow-sm transition-all"
+									>
+										<span>前往官方控制台开通专线</span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+									</a>
+									<a
+										href="/pricing"
+										class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 text-xs sm:text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:border-primary/50 transition-colors"
+									>
+										<span>查看套餐规格横评</span>
+									</a>
+								</div>
+								<div class="mt-4 pt-3 border-t border-dashed border-neutral-200 dark:border-neutral-700 text-[11px] text-neutral-400 dark:text-neutral-500 leading-relaxed">
+									<strong>【推广合规与服务透明度披露】</strong>
+									本站为 NordVPN 官方授权的独立品牌落地页与技术知识库。点击按钮前往控制台将自动带入官方特惠邀请码（{siteConfig.inviteCode}）。本站所获联盟推荐收益不会额外增加用户的实际购买成本，并全部用于专线性能评测与技术文档持续更新。
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+		</main>
+	</div>
+</PostLayout>
+
+<style>
+.toc-sticky-wrapper {
+  position: sticky;
+  top: 8rem;
+}
+</style>
+
+<script>
+// Reading progress bar
+function updateReadingProgress() {
+  const progressBar = document.getElementById('reading-progress');
+  if (!progressBar) return;
+
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const scrollTop = window.scrollY;
+  const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+
+  progressBar.style.transform = `scaleX(${Math.min(scrollPercentage / 100, 1)})`;
+}
+
+// Event listener
+window.addEventListener('scroll', updateReadingProgress, { passive: true });
+
+// Initialize
+document.addEventListener('DOMContentLoaded', updateReadingProgress);
+updateReadingProgress();
+</script>
+

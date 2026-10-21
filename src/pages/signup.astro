@@ -1,0 +1,17 @@
+---
+// Alias redirect to primary canonical route /sign-up/
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0;url=/sign-up/" />
+    <link rel="canonical" href="https://nordvpn.world/sign-up/" />
+    <meta name="robots" content="noindex, follow" />
+    <title>正在跳转到注册页面 — NordVPN</title>
+  </head>
+  <body class="bg-[#fdfaf5] dark:bg-[#0b1220] flex items-center justify-center min-h-screen text-center p-4">
+    <p class="text-sm text-neutral-500">正在跳转到 <a href="/sign-up/" class="text-[#2d6dc3] underline">官方注册控制台 (/sign-up/)</a>...</p>
+    <script is:inline>window.location.replace("/sign-up/");</script>
+  </body>
+</html>

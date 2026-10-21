@@ -1,0 +1,589 @@
+---
+import { Moon, SunMedium, ChevronDown, ChevronRight, Menu, X } from "@lucide/astro";
+import { siteConfig } from "@/config/site";
+import menus from "@/collections/menu.json";
+import Button from "@/components/ui/Button.astro";
+import Logo from "@/components/ui/Logo.astro";
+---
+
+<!-- This is an invisible div with relative position so that it takes up the height of the menu (because menu is absolute/fixed) -->
+<div class="relative w-full h-16 sm:h-20 opacity-0 pointer-events-none"></div>
+<header id="header" class="fixed top-2 sm:top-4 z-50 w-full px-3 sm:px-4 lg:px-6">
+  <div
+    id="site-container"
+    class="flex items-center justify-between h-14 sm:h-16 max-w-7xl mx-auto px-3 sm:px-6 py-2 border-transparent border-[0.5px] transition-all duration-300"
+  >
+    <!-- Logo -->
+    <div class="flex-shrink-0 z-50 mr-2 xl:mr-4">
+      <Logo />
+    </div>
+
+    <!-- Mobile Menu Background Overlay -->
+    <div
+      id="mobileMenuBackground"
+      class="fixed inset-0 z-20 hidden w-screen h-screen duration-300 ease-out bg-white/90 backdrop-blur-sm dark:bg-neutral-950/90"
+    >
+    </div>
+
+    <!-- Navigation -->
+    <nav
+      class="relative z-30 flex items-center justify-end w-full text-sm text-neutral-500 dark:text-neutral-400"
+    >
+      <!-- Mobile Controls (Visible on screens < lg) -->
+      <div class="flex items-center gap-2 lg:hidden">
+        <!-- Dark Mode Toggle (Mobile) -->
+        <div
+          id="darkToggleMobile"
+          class="flex items-center justify-center w-9 h-9 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-transform duration-200 active:scale-95 flex-shrink-0"
+        >
+          <div
+            class="flex justify-center items-center w-5 h-5 relative overflow-hidden rounded-full bg-[#7fa1ff] bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
+            style="box-shadow: 0px 2px 3px 0 rgba(55,52,209,0.21);"
+          >
+            <SunMedium
+              class="absolute hidden text-white w-3.5 h-3.5 transition duration-200 transform ease mobile-sun" />
+            <Moon
+              class="absolute hidden text-white w-3.5 h-3.5 transition duration-200 transform ease mobile-moon" />
+          </div>
+        </div>
+
+        <!-- Hamburger Menu Button -->
+        <button
+          type="button"
+          id="openMenu"
+          aria-label="Open menu"
+          class="flex items-center justify-center w-9 h-9 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md active:scale-90 flex-shrink-0"
+        >
+          <Menu class="w-5 h-5 text-neutral-700 dark:text-neutral-200" stroke-width={2} />
+        </button>
+
+        <!-- Close Menu Button -->
+        <button
+          type="button"
+          id="closeMenu"
+          aria-label="Close menu"
+          class="hidden items-center justify-center w-9 h-9 cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edeefa] border-[0.5px] border-[#f3f3ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md active:scale-90 flex-shrink-0"
+        >
+          <X class="w-5 h-5 text-neutral-700 dark:text-neutral-200" stroke-width={2} />
+        </button>
+      </div>
+
+      <!-- Menu Items Container (Slide-down drawer on mobile, inline nav on lg+) -->
+      <div
+        id="menu"
+        class="fixed top-[66px] lg:top-0 left-3 right-3 lg:left-0 lg:right-0 ease-out duration-300 z-40 flex-col items-center justify-start hidden w-auto h-auto text-sm pt-4 pb-5 lg:py-0 lg:relative lg:flex-row lg:flex flex-1 justify-center"
+      >
+        <!-- Mobile Menu Background Card -->
+        <div
+          class="absolute inset-0 top-0 right-0 block w-full h-full lg:hidden"
+        >
+          <div
+            class="relative w-full h-full bg-white/95 dark:bg-bg-primary-dark/95 border border-dashed border-neutral-300 dark:border-neutral-700 backdrop-blur-md rounded-2xl shadow-xl"
+          >
+          </div>
+        </div>
+
+        <!-- Menu Links -->
+        <div class="relative z-10 flex flex-col lg:flex-row items-stretch lg:items-center w-full lg:w-auto px-2 lg:px-0 gap-0.5 lg:gap-0.5 xl:gap-1">
+          <!-- Mobile menu header label -->
+          <div class="block lg:hidden px-3 pt-1 pb-2">
+            <span class="text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">Navigation</span>
+          </div>
+
+          {
+            menus.map((menu) => {
+              if (menu.children && menu.children.length > 0) {
+                return (
+                  <div class="dropdown-wrapper relative w-full lg:w-auto flex-shrink-0" data-open="false">
+                    <button
+                      type="button"
+                      class="dropdown-toggle group relative flex items-center justify-between lg:justify-center w-full lg:w-auto px-3.5 py-3 lg:py-2 lg:px-2.5 xl:px-3.5 text-sm font-medium tracking-wide duration-200 ease-out rounded-lg lg:rounded-full text-neutral-700 dark:text-neutral-200 hover:text-primary hover:bg-primary/5 lg:hover:bg-primary/10 dark:hover:text-white dark:hover:bg-primary/10 lg:dark:hover:bg-primary/15 active:scale-[0.98] lg:active:scale-100 transition-all gap-1 text-left lg:text-center whitespace-nowrap flex-shrink-0"
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                    >
+                      <span class="flex-1 lg:flex-initial whitespace-nowrap">{menu.name}</span>
+                      <ChevronDown class="dropdown-chevron w-3.5 h-3.5 transition-transform duration-200 text-neutral-400 group-hover:text-primary dark:text-neutral-500 flex-shrink-0" />
+                    </button>
+                    <div class="dropdown-panel lg:absolute lg:top-full lg:left-1/2 lg:mt-2 lg:min-w-[190px] lg:rounded-xl lg:border lg:border-dashed lg:border-primary/20 dark:lg:border-neutral-700 lg:bg-white/95 dark:lg:bg-bg-secondary-dark lg:p-2 hidden lg:invisible lg:opacity-0 lg:flex lg:flex-col lg:transition-all lg:duration-200 shadow-xl backdrop-blur-md">
+                      {menu.children.map((child) => (
+                        <a
+                          href={child.url}
+                          class="dropdown-link group/link flex items-center justify-between lg:justify-start w-full px-3 py-2 rounded-md text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary dark:hover:text-primary-light hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors duration-150 text-left whitespace-nowrap"
+                        >
+                          <span class="whitespace-nowrap">{child.name}</span>
+                          <ChevronRight class="w-3.5 h-3.5 lg:hidden text-neutral-300 dark:text-neutral-600 group-hover/link:text-primary transition-colors flex-shrink-0" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <a
+                  href={menu.url}
+                  class="group relative flex items-center justify-between lg:justify-center w-full lg:w-auto px-3.5 py-3 lg:py-2 lg:px-2.5 xl:px-3.5 text-sm font-medium tracking-wide duration-200 ease-out rounded-lg lg:rounded-full text-neutral-700 dark:text-neutral-200 hover:text-primary hover:bg-primary/5 lg:hover:bg-primary/10 dark:hover:text-white dark:hover:bg-primary/10 lg:dark:hover:bg-primary/15 active:scale-[0.98] lg:active:scale-100 transition-all text-left lg:text-center whitespace-nowrap flex-shrink-0"
+                >
+                  <span class="whitespace-nowrap flex-shrink-0">{menu.name}</span>
+                  <ChevronRight class="w-4 h-4 lg:hidden text-neutral-300 dark:text-neutral-600 group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                </a>
+              );
+            })
+          }
+        </div>
+
+        <!-- Divider before CTA on mobile -->
+        <div class="relative z-10 w-full px-4 lg:hidden mt-3">
+          <div class="w-full border-t border-dashed border-neutral-200 dark:border-neutral-700"></div>
+        </div>
+
+        <!-- Invite Code in Mobile Drawer -->
+        <div class="relative z-10 w-full px-4 mt-3 lg:hidden">
+          <div class="flex items-center justify-between text-xs p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700">
+            <div class="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-300 whitespace-nowrap">
+              <span class="text-[11px] text-neutral-500 whitespace-nowrap">官方邀请码:</span>
+              <span class="font-mono font-bold text-primary dark:text-primary-light whitespace-nowrap">{siteConfig.inviteCode}</span>
+            </div>
+            <button
+              type="button"
+              class="invite-copy-btn px-2.5 py-1 rounded text-[11px] font-semibold bg-primary/10 text-primary hover:bg-primary/20 dark:bg-primary/20 dark:text-primary-light transition-colors whitespace-nowrap"
+              data-code={siteConfig.inviteCode}
+            >
+              <span class="copy-hint whitespace-nowrap">点击复制</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CTA Button (Mobile) -->
+        <div class="relative z-10 w-full px-4 mt-3 lg:hidden">
+          <Button url={siteConfig.registerUrl} type="fill" target="_blank" rel="nofollow sponsored noopener noreferrer" className="m-auto w-full justify-center">
+            立即注册开通
+          </Button>
+        </div>
+      </div>
+
+      <!-- Desktop Actions (Visible on screens >= lg) -->
+      <div class="relative hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0 ml-auto">
+        <!-- Official Invite Code Badge with 1-click copy (Desktop, visible on xl+) -->
+        <button
+          type="button"
+          class="invite-copy-btn hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-primary/10 text-primary hover:bg-primary/20 dark:bg-primary/20 dark:text-primary-light border border-primary/25 transition-all cursor-pointer flex-shrink-0 whitespace-nowrap group"
+          data-code={siteConfig.inviteCode}
+          title="点击复制官方注册邀请码"
+        >
+          <span class="text-neutral-500 dark:text-neutral-400 text-[11px] whitespace-nowrap">邀请码:</span>
+          <span class="font-mono font-bold text-xs whitespace-nowrap tracking-wide">{siteConfig.inviteCode}</span>
+          <span class="copy-hint text-[10px] text-primary/90 dark:text-primary-light/90 ml-0.5 whitespace-nowrap">复制</span>
+        </button>
+
+        <!-- Login Text Link (Desktop) -->
+        <a
+          href={siteConfig.registerUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          class="hidden xl:inline-flex items-center text-xs xl:text-sm font-medium text-neutral-600 hover:text-primary dark:text-neutral-300 dark:hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors whitespace-nowrap flex-shrink-0"
+        >
+          登录控制台
+        </a>
+
+        <!-- Register CTA Button (Desktop) -->
+        <Button
+          url={siteConfig.registerUrl}
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          type="fill"
+          size="sm"
+          className="whitespace-nowrap flex-shrink-0 text-xs xl:text-sm font-semibold px-4 py-1.5 shadow-sm"
+        >
+          立即注册
+        </Button>
+
+        <span class="separator-line hidden lg:inline-block bg-[rgba(183,202,255,0.5)] my-auto w-px h-[18px] flex-shrink-0"></span>
+
+        <!-- Dark Mode Toggle (Desktop) -->
+        <div
+          id="darkToggle"
+          class="relative flex items-center h-8 px-2 gap-1.5 font-medium cursor-pointer rounded-full bg-gradient-to-b from-white to-[#edf1fa] border-[0.5px] border-[#f3f5ff] dark:from-neutral-800 dark:to-neutral-600 dark:border-neutral-600 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95 flex-shrink-0 whitespace-nowrap select-none"
+        >
+          <div
+            class="flex justify-center items-center flex-shrink-0 w-5 h-5 relative overflow-hidden rounded-full bg-gradient-to-b from-[#85a6ff] to-[#2d6dc3] border-[0.5px] border-[#7fa1ff]"
+            style="box-shadow: 0px 2px 3px 0 rgba(55,52,209,0.21);"
+          >
+            <SunMedium id="sun"
+               class="absolute hidden text-white w-3.5 h-3.5 transition duration-200 transform ease" />
+            <Moon class="absolute hidden text-white w-3.5 h-3.5 transition duration-200 transform ease"
+              id="moon" />
+          </div>
+          <span class="inline-block whitespace-nowrap text-xs text-[#6f6c8f] dark:text-neutral-400">
+            <span id="dayText" class="flex-shrink-0 text-left">Light</span>
+            <span id="nightText" class="hidden flex-shrink-0 text-left">Dark</span>
+          </span>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Header container spacing optimization */
+  #header {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Ensure mobile menu doesn't stick to edges */
+  @media (max-width: 1023px) {
+    #menu {
+      max-width: calc(100vw - 24px);
+      transform: translateY(-10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #menu:not(.hidden) {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Staggered entrance for menu items */
+    #menu:not(.hidden) > div > a,
+    #menu:not(.hidden) > div > .dropdown-wrapper {
+      animation: menuItemIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+    #menu:not(.hidden) > div > a:nth-child(2),
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(2) { animation-delay: 0.04s; }
+    #menu:not(.hidden) > div > a:nth-child(3),
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(3) { animation-delay: 0.08s; }
+    #menu:not(.hidden) > div > a:nth-child(4),
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(4) { animation-delay: 0.12s; }
+    #menu:not(.hidden) > div > a:nth-child(5),
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(5) { animation-delay: 0.16s; }
+    #menu:not(.hidden) > div > a:nth-child(6),
+    #menu:not(.hidden) > div > .dropdown-wrapper:nth-child(6) { animation-delay: 0.20s; }
+  }
+
+  @keyframes menuItemIn {
+    from {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #menu:not(.hidden) > div > a,
+    #menu:not(.hidden) > div > .dropdown-wrapper {
+      animation: none;
+    }
+  }
+
+  /* Menu item hover effect optimization */
+  nav a {
+    position: relative;
+    white-space: nowrap;
+  }
+
+  /* Desktop underline animation */
+  @media (min-width: 1024px) {
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 60%;
+      height: 2px;
+      background: var(--color-primary);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
+    }
+
+    nav a:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* Dropdown links inside the panel — no underline */
+    .dropdown-panel a::after {
+      display: none;
+    }
+  }
+
+  /* Dropdown — desktop hover behavior */
+  @media (min-width: 1024px) {
+    .dropdown-panel {
+      translate: -50% -4px;
+    }
+    .dropdown-wrapper:hover .dropdown-panel,
+    .dropdown-wrapper:focus-within .dropdown-panel,
+    .dropdown-wrapper[data-open="true"] .dropdown-panel {
+      opacity: 1 !important;
+      visibility: visible !important;
+      translate: -50% 0;
+    }
+    .dropdown-wrapper:hover .dropdown-chevron,
+    .dropdown-wrapper:focus-within .dropdown-chevron,
+    .dropdown-wrapper[data-open="true"] .dropdown-chevron {
+      transform: rotate(180deg);
+    }
+    .dropdown-wrapper::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 12px;
+    }
+  }
+
+  /* Dropdown — mobile click-to-expand */
+  @media (max-width: 1023px) {
+    .dropdown-panel {
+      display: none;
+      width: calc(100% - 0.75rem);
+      margin-left: 0.75rem;
+      padding-left: 0.75rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+      border-left: 1px dashed rgba(45, 109, 195, 0.3);
+    }
+    .dark .dropdown-panel {
+      border-left-color: rgba(140, 180, 240, 0.25);
+    }
+    .dropdown-wrapper[data-open="true"] .dropdown-panel {
+      display: flex;
+      flex-direction: column;
+      animation: dropdownIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+    .dropdown-wrapper[data-open="true"] .dropdown-chevron {
+      transform: rotate(180deg);
+    }
+  }
+
+  @keyframes dropdownIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Mobile menu item click feedback */
+  @media (max-width: 1023px) {
+    nav a:active {
+      background-color: var(--color-neutral-100);
+    }
+
+    .dark nav a:active {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  /* Dark mode toggle button optimization */
+  #darkToggle,
+  #darkToggleMobile {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Mobile menu background blur effect enhancement */
+  @supports (backdrop-filter: blur(12px)) {
+    #mobileMenuBackground {
+      backdrop-filter: blur(12px);
+    }
+
+    @media (max-width: 1023px) {
+      #menu > div > div {
+        backdrop-filter: blur(16px);
+      }
+    }
+  }
+
+  /* Ensure Logo doesn't shrink on mobile */
+  .flex-shrink-0 {
+    min-width: fit-content;
+  }
+
+  /* Prevent horizontal scrolling on mobile */
+  @media (max-width: 1023px) {
+    body {
+      overflow-x: hidden;
+    }
+  }
+
+  /* Optimize mobile touch feedback */
+  @media (max-width: 1023px) {
+    button, a, [role="button"] {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+
+  /* Menu background on small screens */
+  @media (max-width: 1023px) {
+    #mobileMenuBackground {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+
+    #mobileMenuBackground:not(.hidden) {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  // Declare global types to fix TypeScript errors
+  declare global {
+    interface Window {
+      closeMobileMenu: () => void;
+    }
+  }
+
+  const DESKTOP_BP = 1024;
+
+  // Sync dark mode toggle between mobile and desktop
+  const darkToggle = document.getElementById('darkToggle');
+  const darkToggleMobile = document.getElementById('darkToggleMobile');
+
+  function syncDarkModeIcons() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const sunIcons = document.querySelectorAll('#sun, .mobile-sun');
+    const moonIcons = document.querySelectorAll('#moon, .mobile-moon');
+
+    if (isDark) {
+      moonIcons.forEach(icon => icon.classList.remove('hidden'));
+      sunIcons.forEach(icon => icon.classList.add('hidden'));
+      document.getElementById('dayText')?.classList.add('hidden');
+      document.getElementById('nightText')?.classList.remove('hidden');
+    } else {
+      sunIcons.forEach(icon => icon.classList.remove('hidden'));
+      moonIcons.forEach(icon => icon.classList.add('hidden'));
+      document.getElementById('dayText')?.classList.remove('hidden');
+      document.getElementById('nightText')?.classList.add('hidden');
+    }
+  }
+
+  // Sync on initialization
+  document.addEventListener('DOMContentLoaded', syncDarkModeIcons);
+
+  // Listen for dark mode changes
+  const observer = new MutationObserver(syncDarkModeIcons);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  // Mobile dark mode toggle
+  darkToggleMobile?.addEventListener('click', () => {
+    darkToggle?.click();
+  });
+
+  // Optimize mobile menu open/close
+  const openMenu = document.getElementById('openMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  const menu = document.getElementById('menu');
+  const mobileMenuBackground = document.getElementById('mobileMenuBackground');
+
+  // Mobile menu open function
+  function openMobileMenu() {
+    menu?.classList.remove('hidden');
+    mobileMenuBackground?.classList.remove('hidden');
+    openMenu?.classList.add('hidden');
+    closeMenu?.classList.remove('hidden');
+    closeMenu?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Mobile menu close function
+  function closeMobileMenu() {
+    menu?.classList.add('hidden');
+    mobileMenuBackground?.classList.add('hidden');
+    closeMenu?.classList.add('hidden');
+    closeMenu?.classList.remove('flex');
+    openMenu?.classList.remove('hidden');
+    document.body.style.overflow = '';
+  }
+
+  // Click hamburger button to open menu
+  openMenu?.addEventListener('click', openMobileMenu);
+
+  // Click close button to close menu
+  closeMenu?.addEventListener('click', closeMobileMenu);
+
+  // Click background to close menu
+  mobileMenuBackground?.addEventListener('click', closeMobileMenu);
+
+  // Add click-to-close functionality for mobile menu items
+  const menuLinks = menu?.querySelectorAll('a');
+  menuLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < DESKTOP_BP) {
+        closeMobileMenu();
+      }
+    });
+  });
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= DESKTOP_BP) {
+      document.body.style.overflow = '';
+      if (menu?.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+      }
+    }
+  });
+
+  // Add to global scope so inline events can call it
+  window.closeMobileMenu = closeMobileMenu;
+
+  // ─── Dropdown menu (mobile click-to-expand) ────────────────────────────
+  const dropdownToggles = document.querySelectorAll<HTMLButtonElement>('.dropdown-toggle');
+
+  function closeAllDropdowns(except?: Element) {
+    document.querySelectorAll<HTMLElement>('.dropdown-wrapper').forEach((w) => {
+      if (w !== except) {
+        w.setAttribute('data-open', 'false');
+        const t = w.querySelector<HTMLButtonElement>('.dropdown-toggle');
+        t?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  dropdownToggles.forEach((toggle) => {
+    toggle.addEventListener('click', (e) => {
+      if (window.innerWidth >= DESKTOP_BP) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const wrapper = toggle.closest<HTMLElement>('.dropdown-wrapper');
+      if (!wrapper) return;
+      const isOpen = wrapper.getAttribute('data-open') === 'true';
+      closeAllDropdowns(wrapper);
+      wrapper.setAttribute('data-open', isOpen ? 'false' : 'true');
+      toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+    });
+  });
+
+  // Close dropdowns when navigating via mobile dropdown link
+  document.querySelectorAll<HTMLAnchorElement>('.dropdown-panel a').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < DESKTOP_BP) {
+        setTimeout(() => {
+          closeAllDropdowns();
+          closeMobileMenu();
+        }, 0);
+      }
+    });
+  });
+
+  // Reset dropdown state when resizing across the breakpoint
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= DESKTOP_BP) {
+      closeAllDropdowns();
+    }
+  });
+</script>

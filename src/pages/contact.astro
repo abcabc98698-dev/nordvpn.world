@@ -1,0 +1,179 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import { ArrowRight, Clock3, Headphones, Mail, MessageSquare, Send, Sparkles, ShieldCheck } from "@lucide/astro";
+
+const contactTopics = [
+  { value: "custom", label: "企业定制版 / 独享原生 IP 咨询" },
+  { value: "client", label: "客户端下载与配置协助" },
+  { value: "billing", label: "套餐开通与续费支持" },
+  { value: "cooperation", label: "商业合作与出海企业批量采购" },
+  { value: "general", label: "其他技术咨询" },
+];
+
+const channels = [
+  {
+    icon: Mail,
+    label: "官方服务邮箱",
+    text: siteConfig.mail,
+    href: `mailto:${siteConfig.mail}`,
+  },
+  {
+    icon: MessageSquare,
+    label: "Telegram 官方技术支持",
+    text: "@nordvpn_world",
+    href: siteConfig.telegram,
+  },
+  {
+    icon: Headphones,
+    label: "官方控制台工单",
+    text: "7×24 小时实时响应",
+    href: siteConfig.registerUrl,
+  },
+];
+
+const expectations = [
+  { icon: Clock3, title: "快速响应机制", desc: "技术工单与 Telegram 咨询通常在 15 分钟内快速响应。" },
+  { icon: Headphones, title: "一对一专家对接", desc: "企业定制版用户享有 7×24 专属技术专家 1 对 1 专线网络调优。" },
+  { icon: ShieldCheck, title: "官方正品保障", desc: "本站为品牌方授权落地页，提供最正规的专线售后与技术维保。" },
+];
+---
+
+<Layout
+  title="客户支持与官方技术咨询 — NordVPN 全球专线网络"
+  description="联系 NordVPN 官方技术支持团队。提供企业专线部署、独享原生 IP 定制、客户端配置教程及 7×24 在线客户工单服务。"
+>
+  <main class="site-container py-12 md:py-20">
+    <section class="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1.05fr)] lg:items-start max-w-6xl mx-auto">
+      <div data-aos="fade-up-xs" data-aos-once="true">
+        <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-medium text-primary dark:border-primary-light/20 dark:bg-primary-light/10 dark:text-primary-light">
+          <Sparkles size={14} />
+          7×24 官方客户支持
+        </p>
+        <h1 class="max-w-xl font-brand text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-normal text-neutral-900 dark:text-neutral-100">
+          随时为您的出海专线保驾护航
+        </h1>
+        <p class="mt-4 max-w-lg text-sm sm:text-base leading-relaxed text-neutral-600 dark:text-neutral-300">
+          无论您是对企业独立部署感兴趣、需要客户端订阅导入协助，还是希望咨询大批量采购优惠，我们的专业网络工程师团队均随时待命。
+        </p>
+
+        <div class="mt-8 space-y-4">
+          {channels.map((channel) => (
+            <a
+              href={channel.href}
+              target={channel.href.startsWith("http") ? "_blank" : undefined}
+              rel={channel.href.startsWith("http") ? (channel.href === siteConfig.registerUrl ? "nofollow sponsored noopener noreferrer" : "nofollow noopener noreferrer") : undefined}
+              class="flex items-center justify-between rounded-xl border border-primary/10 bg-bg-secondary p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md dark:border-neutral-700 dark:bg-bg-secondary-dark"
+            >
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <channel.icon size={18} />
+                </div>
+                <div>
+                  <p class="text-xs text-neutral-400">{channel.label}</p>
+                  <p class="font-medium text-sm text-neutral-800 dark:text-neutral-100">{channel.text}</p>
+                </div>
+              </div>
+              <ArrowRight size={16} class="text-neutral-400" />
+            </a>
+          ))}
+        </div>
+
+        <div class="mt-8 border-t border-dashed border-primary/15 pt-6 dark:border-neutral-700">
+          <div class="grid gap-4 sm:grid-cols-3">
+            {expectations.map((item) => (
+              <div class="rounded-xl border border-primary/10 bg-bg-secondary/60 p-3.5 dark:border-neutral-700 dark:bg-bg-secondary-dark/60">
+                <item.icon size={18} class="text-primary mb-2" />
+                <h2 class="text-xs font-bold text-neutral-800 dark:text-neutral-100">{item.title}</h2>
+                <p class="mt-1 text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Message Form -->
+      <div
+        class="rounded-2xl border border-primary/20 bg-bg-secondary/90 p-6 shadow-xl backdrop-blur dark:border-neutral-700 dark:bg-bg-secondary-dark/90 sm:p-8"
+        data-aos="fade-left-sm"
+        data-aos-once="true"
+      >
+        <div class="mb-6">
+          <span class="text-xs font-semibold uppercase tracking-wider text-primary">ONLINE INQUIRY</span>
+          <h2 class="mt-1 font-brand text-2xl font-bold text-neutral-800 dark:text-neutral-100">在线提交技术咨询</h2>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+            填写您的业务需求，技术专家将快速与您取得联系。
+          </p>
+        </div>
+
+        <form id="contact-form" class="space-y-4">
+          <div>
+            <label for="topic" class="mb-1.5 block text-xs font-medium text-neutral-700 dark:text-neutral-300">咨询主题</label>
+            <select
+              id="topic"
+              name="topic"
+              class="w-full rounded-lg border border-neutral-200 bg-bg-secondary px-3.5 py-2.5 text-xs text-neutral-800 focus:border-primary focus:outline-none dark:border-neutral-700 dark:bg-bg-secondary-dark dark:text-neutral-100"
+            >
+              {contactTopics.map((topic) => (
+                <option value={topic.value}>{topic.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="mb-1.5 block text-xs font-medium text-neutral-700 dark:text-neutral-300">称呼 / 团队名称</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="例如：李先生 / 出海电商工作室"
+                class="w-full rounded-lg border border-neutral-200 bg-bg-secondary px-3.5 py-2.5 text-xs text-neutral-800 placeholder:text-neutral-400 focus:border-primary focus:outline-none dark:border-neutral-700 dark:bg-bg-secondary-dark dark:text-neutral-100"
+              />
+            </div>
+            <div>
+              <label for="contact" class="mb-1.5 block text-xs font-medium text-neutral-700 dark:text-neutral-300">联系方式 (邮箱 / Telegram)</label>
+              <input
+                id="contact"
+                name="contact"
+                type="text"
+                required
+                placeholder="your@email.com 或 @handle"
+                class="w-full rounded-lg border border-neutral-200 bg-bg-secondary px-3.5 py-2.5 text-xs text-neutral-800 placeholder:text-neutral-400 focus:border-primary focus:outline-none dark:border-neutral-700 dark:bg-bg-secondary-dark dark:text-neutral-100"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="message" class="mb-1.5 block text-xs font-medium text-neutral-700 dark:text-neutral-300">需求详情或问题描述</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder="请简要说明您的业务场景（如：跨境电商矩阵多店铺管理、TikTok 全球直播推流、AI 工具调用规模等）..."
+              class="w-full rounded-lg border border-neutral-200 bg-bg-secondary p-3 text-xs text-neutral-800 placeholder:text-neutral-400 focus:border-primary focus:outline-none dark:border-neutral-700 dark:bg-bg-secondary-dark dark:text-neutral-100"
+            ></textarea>
+          </div>
+
+          <Button
+            url={siteConfig.telegram}
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            type="fill"
+            className="w-full justify-center text-sm py-3 font-bold"
+          >
+            <span>直接通过 Telegram 联系官方技术客服</span>
+            <Send size={15} class="ml-1" />
+          </Button>
+
+          <p class="text-[11px] text-center text-neutral-400 dark:text-neutral-500">
+            亦可直接进入官方控制台提交工单，获取 7×24 小时技术保障
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+</Layout>

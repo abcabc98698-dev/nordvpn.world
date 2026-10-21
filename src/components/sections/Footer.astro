@@ -1,0 +1,188 @@
+---
+import Logo from "@/components/ui/Logo.astro";
+import ToTop from "@/components/widgets/ToTop.astro";
+import { siteConfig, socialLinks } from "@/config/site.js";
+import { ShieldCheck, Zap, Lock, Globe } from "@lucide/astro";
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  product: [
+    { name: "官方套餐选购与横评", url: "/pricing" },
+    { name: "IEPL 专线优势", url: "/features" },
+    { name: "客户端与使用教程", url: "/#setup" },
+    { name: "网络集群实时状态", url: "/status" },
+    { name: "官方控制台注册/登录", url: siteConfig.registerUrl, external: true, sponsored: true },
+  ],
+  solutions: [
+    { name: "跨境电商 & TikTok 全球直播", url: "/features#cross-border" },
+    { name: "ChatGPT & AI 生产力加速", url: "/features#ai-tools" },
+    { name: "4K/8K 海外极速流媒体", url: "/features#streaming" },
+    { name: "独享原生 IP 与企业定制专线", url: "/pricing" },
+  ],
+  support: [
+    { name: "常见问题 FAQ", url: "/#faq" },
+    { name: "客户服务与技术咨询", url: "/contact" },
+    { name: "知识库与新手教程", url: "/blog" },
+    { name: "服务日志与线路更新", url: "/changelog" },
+    { name: "官方技术客服 Telegram", url: siteConfig.telegram, external: true },
+  ],
+  legal: [
+    { name: "关于我们与官方授权说明", url: "/about" },
+    { name: "服务条款 (Terms)", url: "/terms" },
+    { name: "隐私保护政策 (Privacy)", url: "/privacy" },
+    { name: "SLA 晚高峰稳定性保障", url: "/about#sla" },
+  ],
+};
+---
+
+<section class="text-gray-700 border-t mt-20 md:mt-32 border-dashed border-primary/15 dark:border-primary-dark/15 border-[.75px]">
+  <div class="container mx-auto px-6 max-w-7xl py-12 md:py-16">
+    <!-- Top: Logo + Brand statement -->
+    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10 mb-12">
+      <div class="max-w-md">
+        <Logo />
+        <p class="mt-4 text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
+          NordVPN（<span class="text-neutral-800 dark:text-neutral-200 font-medium">nordvpn.world</span>）品牌官网，自 2020 年起持续稳定运营。全节点部署企业级 IEPL / IPLC 内网专线与轻量 VLESS 协议，最高 2.5Gbps 峰值带宽，专为跨境出海、TikTok 直播、AI 研发与超清流媒体打造。
+        </p>
+
+        <!-- Trust Badges -->
+        <div class="mt-5 flex flex-wrap gap-2 text-xs">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 font-medium">
+            <ShieldCheck class="w-3.5 h-3.5" /> 2020年稳定运营
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium">
+            <Zap class="w-3.5 h-3.5" /> IEPL/IPLC 企业专线
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-medium">
+            <Lock class="w-3.5 h-3.5" /> VLESS 原生协议
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 font-medium">
+            <Globe class="w-3.5 h-3.5" /> 不限设备连接
+          </span>
+        </div>
+      </div>
+
+      <!-- Four columns -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-10">
+        <!-- Column 1 -->
+        <div>
+          <h4 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-4 tracking-tight">产品与专线</h4>
+          <ul class="space-y-2.5">
+            {footerLinks.product.map((link) => (
+              <li>
+                <a
+                  href={link.url}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? (link.url === siteConfig.registerUrl ? "nofollow sponsored noopener noreferrer" : "nofollow noopener noreferrer") : undefined}
+                  class="text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary-light transition-colors duration-200"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Column 2 -->
+        <div>
+          <h4 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-4 tracking-tight">核心应用场景</h4>
+          <ul class="space-y-2.5">
+            {footerLinks.solutions.map((link) => (
+              <li>
+                <a href={link.url} class="text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary-light transition-colors duration-200">
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Column 3 -->
+        <div>
+          <h4 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-4 tracking-tight">帮助与支持</h4>
+          <ul class="space-y-2.5">
+            {footerLinks.support.map((link) => (
+              <li>
+                <a
+                  href={link.url}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? (link.url === siteConfig.registerUrl ? "nofollow sponsored noopener noreferrer" : "nofollow noopener noreferrer") : undefined}
+                  class="text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary-light transition-colors duration-200"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Column 4 -->
+        <div>
+          <h4 class="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-4 tracking-tight">品牌与政策</h4>
+          <ul class="space-y-2.5">
+            {footerLinks.legal.map((link) => (
+              <li>
+                <a href={link.url} class="text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary-light transition-colors duration-200">
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Official Authorization Notice Banner -->
+    <div class="mb-8 p-4 rounded-xl border border-dashed border-primary/20 bg-primary/[0.03] dark:bg-primary/[0.06] text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div>
+        <strong class="text-neutral-800 dark:text-neutral-200">官方授权服务声明：</strong>
+        本网站（nordvpn.world）属于品牌方获得官方授权的独立品牌官网落地页与客户服务中心，提供合规、安全的企业级专线网络加速与技术服务。全站注册已自动挂载官方专属推荐通道。
+      </div>
+      <div class="inline-flex items-center gap-1.5 flex-shrink-0 text-xs font-mono">
+        <span class="text-neutral-400">官方识别码:</span>
+        <button
+          type="button"
+          class="invite-copy-btn px-2 py-0.5 rounded font-bold text-primary bg-primary/10 hover:bg-primary/20 transition-colors cursor-pointer"
+          data-code={siteConfig.inviteCode}
+          title="点击复制官方邀请码"
+        >
+          <span>{siteConfig.inviteCode}</span>
+          <span class="copy-hint text-[10px] ml-1 font-normal text-neutral-400">复制</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-dashed border-primary/10 dark:border-primary-dark/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-neutral-400 dark:text-neutral-500">
+        © 2020–{currentYear} <span class="font-medium text-neutral-600 dark:text-neutral-300">NordVPN (nordvpn.world)</span>. 官方授权品牌方所有.
+      </p>
+
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-2 text-xs text-neutral-400 dark:text-neutral-500">
+          <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-dashed border-primary/30 text-primary">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            全节点 IPLC/IEPL 正常运行
+          </span>
+          <span>SLA 99.98%</span>
+        </span>
+
+        <!-- Social Icons -->
+        <div class="flex items-center gap-3 text-neutral-400">
+          {socialLinks.map((s) => (
+            <a
+              href={s.url}
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="hover:text-primary transition-colors duration-200 p-1"
+              aria-label={s.name}
+              set:html={s.icon}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+  <ToTop />
+</section>

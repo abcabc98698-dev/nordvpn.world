@@ -1,0 +1,82 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import { FileText, ShieldAlert, Check } from "@lucide/astro";
+---
+
+<Layout
+  title="服务条款 (Terms of Service) — NordVPN 官方专线网络"
+  description="NordVPN 官方服务条款：规范官方授权专线网络的使用准则、合理使用规范 (Fair Use Policy)、服务等级协议 (SLA) 及订购权利说明。"
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="服务条款 (Terms of Service)"
+      description="请在注册开通及使用 NordVPN（nordvpn.world）专线网络服务前，仔细阅读以下服务条款。"
+    />
+  </section>
+
+  <section class="site-container max-w-3xl mx-auto pb-24">
+    <article class="p-6 md:p-10 rounded-3xl border border-primary/15 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark space-y-8 text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed shadow-sm">
+
+      <div>
+        <h2 class="text-xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-3 flex items-center gap-2">
+          <FileText class="w-5 h-5 text-primary" />
+          1. 协议范围与官方授权
+        </h2>
+        <p>
+          本服务条款由 NordVPN（<span class="font-medium text-neutral-800 dark:text-neutral-200">nordvpn.world</span>）官方运营团队与注册使用本专线服务的用户共同订立。通过完成注册、订购套餐或使用自研及第三方客户端连接专线，即表示您已阅读、知悉并同意本条款全部内容。
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-3 flex items-center gap-2">
+          <Check class="w-5 h-5 text-primary" />
+          2. 服务交付与套餐权益
+        </h2>
+        <ul class="list-disc pl-5 mt-2 space-y-2 text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+          <li><strong>开通交付：</strong>用户支付成功后，系统即刻在官方控制台生成专属订阅配置与客户端授权码，秒级自动激活生效；</li>
+          <li><strong>流量配额：</strong>周期套餐（轻量版、极速版、定制版）每月自动重置额度；“致敬斯诺克147永久套餐”为一次性买断永久版，247GB 流量永不过期直至耗尽；</li>
+          <li><strong>无设备上限：</strong>全系套餐均不限制客户端同时连接数量，但严禁将个人订阅公开或转售。</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-3 flex items-center gap-2">
+          <ShieldAlert class="w-5 h-5 text-amber-500" />
+          3. 合理使用规范 (Fair Use Policy)
+        </h2>
+        <p>
+          为确保全网用户的晚高峰专线质量与网络安全，用户严禁将专线用于任何违法违规或恶意活动，包括但不限于：
+        </p>
+        <ul class="list-disc pl-5 mt-2 space-y-1.5 text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+          <li>发起 DDoS / DoS 攻击、网络端口扫描、漏洞探测与网络嗅探；</li>
+          <li>发送大规模未经请求的商业垃圾邮件 (SPAM)；</li>
+          <li>侵犯知识产权或分发恶意软件、木马或病毒程序；</li>
+          <li>利用 BT / P2P 下载版权保护文件导致节点被版权方投诉。</li>
+        </ul>
+        <p class="mt-2 text-xs text-rose-500">
+          若系统监控探测到上述严重违规行为，我们有权在不予退款的前提下暂停或终止相关违规账号的服务。
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-brand font-bold text-neutral-900 dark:text-neutral-100 mb-3 flex items-center gap-2">
+          <Check class="w-5 h-5 text-primary" />
+          4. 服务保障与技术支持
+        </h2>
+        <p>
+          我们向付费用户提供 99.98% 晚高峰专线高可用 SLA 保障。如遇偶发性海底光缆事故或上游机房故障，系统将自动调度备用线路进行热转移。用户可通过控制台工单或官方 Telegram 客服获取快速技术协助。
+        </p>
+      </div>
+
+      <div class="pt-4 border-t border-dashed border-primary/15 dark:border-neutral-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <span class="text-xs text-neutral-400">最近修订生效日期：2026年10月</span>
+        <Button url={siteConfig.registerUrl} target="_blank" rel="nofollow sponsored noopener noreferrer" type="fill" size="sm">
+          同意并前往注册
+        </Button>
+      </div>
+    </article>
+  </section>
+</Layout>

@@ -1,0 +1,17 @@
+---
+// Alias redirect to primary canonical route /sign-in/
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0;url=/sign-in/" />
+    <link rel="canonical" href="https://nordvpn.world/sign-in/" />
+    <meta name="robots" content="noindex, follow" />
+    <title>正在跳转到登录控制台 — NordVPN</title>
+  </head>
+  <body class="bg-[#fdfaf5] dark:bg-[#0b1220] flex items-center justify-center min-h-screen text-center p-4">
+    <p class="text-sm text-neutral-500">正在跳转到 <a href="/sign-in/" class="text-[#2d6dc3] underline">登录控制台 (/sign-in/)</a>...</p>
+    <script is:inline>window.location.replace("/sign-in/");</script>
+  </body>
+</html>

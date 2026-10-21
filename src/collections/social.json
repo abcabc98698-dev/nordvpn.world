@@ -1,0 +1,30 @@
+[
+	{
+		"id": 1,
+		"name": "Telegram",
+		"username": "nordvpn_world",
+		"image": "/assets/social/social-twitter.jpg",
+		"url": "https://t.me/nordvpn_world"
+	},
+	{
+		"id": 2,
+		"name": "Twitter / X",
+		"username": "NordVPN",
+		"image": "/assets/social/social-twitter.jpg",
+		"url": "https://x.com/NordVPN"
+	},
+	{
+		"id": 3,
+		"name": "Official Email",
+		"username": "support@nordvpn.world",
+		"image": "/assets/social/social-email.jpg",
+		"url": "mailto:support@nordvpn.world"
+	},
+	{
+		"id": 4,
+		"name": "Official Portal",
+		"username": "nordvpn.world",
+		"image": "/assets/social/social-github.jpg",
+		"url": "https://nordvpn.world"
+	}
+]

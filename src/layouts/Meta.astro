@@ -1,0 +1,100 @@
+---
+import { siteConfig } from '@/config/site.js';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  twitterHandle?: string;
+  noindex?: boolean;
+  canonical?: string;
+}
+
+const {
+  title = siteConfig.meta.title,
+  description = siteConfig.meta.description,
+  keywords = siteConfig.meta.keywords,
+  ogImage = `${siteConfig.url}/og.jpg`,
+  twitterHandle = siteConfig.social.twitterName || '@NordVPN',
+  noindex = false,
+  canonical,
+} = Astro.props;
+
+// Determine canonical URL cleanly based on Astro.url
+const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).toString();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
+      "name": "NordVPN",
+      "url": siteConfig.url,
+      "logo": `${siteConfig.url}/assets/logo.png`,
+      "description": "官方授权企业级 IEPL/IPLC 专线与 VLESS 高速网络服务",
+      "foundingDate": "2020",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": siteConfig.mail,
+        "contactType": "customer service"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      "url": siteConfig.url,
+      "name": "NordVPN 官方授权专线网络",
+      "publisher": {
+        "@id": `${siteConfig.url}/#organization`
+      }
+    }
+  ]
+};
+---
+
+<!-- Meta Tags -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="/favicon.png" />
+{!noindex && <link rel="canonical" href={canonicalURL} />}
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content={siteConfig.author} />
+<meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+
+<!-- Search Engine Site Verification (Google, Bing, Shenma/yisou, Baidu) -->
+{siteConfig.verification?.google && (
+  <meta name="google-site-verification" content={siteConfig.verification.google} />
+)}
+{siteConfig.verification?.bing && (
+  <meta name="msvalidate.01" content={siteConfig.verification.bing} />
+)}
+{siteConfig.verification?.shenma && (
+  <meta name="shenma-site-verification" content={siteConfig.verification.shenma} />
+)}
+{siteConfig.verification?.baidu && (
+  <meta name="baidu-site-verification" content={siteConfig.verification.baidu} />
+)}
+
+<!-- Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="NordVPN (nordvpn.world)" />
+<meta property="og:locale" content="zh_CN" />
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:site" content={twitterHandle} />
+<meta name="twitter:creator" content={twitterHandle} />
+
+<!-- Structured Data (JSON-LD) for Search Engines -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

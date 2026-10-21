@@ -1,0 +1,17 @@
+---
+import Layout from  "@/layouts/Layout.astro";
+interface Props {
+	title?: string | undefined;
+	keywords?: string | undefined;
+	description?: string | undefined;
+	noindex?: boolean | undefined;
+	canonical?: string | undefined;
+}
+const { title, description, keywords, noindex, canonical } = Astro.props;
+---
+
+<Layout title={title} description={description} keywords={keywords} noindex={noindex} canonical={canonical}>
+  <main class="post-wrapper">
+      <slot />
+  </main>
+</Layout>

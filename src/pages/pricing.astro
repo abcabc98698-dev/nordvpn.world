@@ -1,0 +1,140 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import PricingSection from "@/components/sections/Pricing.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import { ArrowRight } from "@lucide/astro";
+
+const comparisonFeatures = [
+  { name: "官方定价", snooker: "¥147 (一次性永久)", light: "¥99/年 (折¥8.25/月)", speed: "¥25/月 (年付8折)", custom: "¥680/月" },
+  { name: "流量规格", snooker: "247GB 永久不过期", light: "69GB / 月", speed: "168GB / 月", custom: "500GB / 月 (可扩充)" },
+  { name: "线路架构", snooker: "原生稳定专线", light: "原生稳定节点", speed: "全球 IPLC 企业专线", custom: "全 IPLC 专线独立部署" },
+  { name: "节点倍率", snooker: "全节点 ×1 无套路", light: "全节点 ×1 无套路", speed: "全节点 ×1 无套路", custom: "独享专属原生 IP" },
+  { name: "单节点峰值带宽", snooker: "最高 2.5Gbps", light: "最高 2.5Gbps", speed: "最高 2.5Gbps", custom: "最高 2.5Gbps (保障带宽)" },
+  { name: "同时在线设备数", snooker: "不限设备", light: "不限设备", speed: "不限设备", custom: "不限设备" },
+  { name: "覆盖核心地区", snooker: "港/台/日/新/美/英/法/德/土/泰等", light: "港/台/日/新/马/美/德/法/英/土/越", speed: "港/台/日/新/马/美/德/法/英/土/越 (全IPLC)", custom: "港/日/美/新及全球按需选配" },
+  { name: "ChatGPT & AI 工具", snooker: "全节点支持", light: "全节点支持", speed: "高纯净极速直连", custom: "独享原生 IP 零风控" },
+  { name: "4K/8K 海外流媒体", snooker: "高清支持", light: "超清支持", speed: "4K/8K 极速秒开", custom: "企业多路超清分发" },
+  { name: "TikTok 直播与跨境电商", snooker: "适合外贸资料与轻度运营", light: "适合店铺日常登录与发帖", speed: "适合 TikTok 全球直播推流", custom: "高要求矩阵直播专属通道" },
+  { name: "折扣策略", snooker: "固定特惠·不打折", light: "年付 99 元超高性价比", speed: "半年9折/年付8折/两年75折/三年7折", custom: "专属独立部署·不打折" },
+  { name: "技术服务与运维", snooker: "标准工单与社群技术支持", light: "标准工单与社群技术支持", speed: "7×24 高可用实时运维保障", custom: "7×24 专属专家 1 对 1 技术对接" },
+];
+
+const pricingFaq = [
+  {
+    question: "轻量版年付 99 元是否有其他隐藏费用？",
+    answer: "绝无任何隐形消费。99 元为整年费用，折合每月仅约 8.25 元（※ 特别说明：8.25元/月属于年付折算后的平均月度成本，并非普通月付价格）。每月可享 69GB 高速流量，每月初自动重置刷新。"
+  },
+  {
+    question: "致敬斯诺克147永久套餐适合哪些场景？",
+    answer: "该套餐为一次性买断，247GB 永久有效流量无时间限制，不限设备，单节点最高 2.5Gbps。非常适合作为长期的备用线路、外贸日常邮件收发、轻度论文查询与跨境聊天用户，不用担心忘记续费而导致业务中断。"
+  },
+  {
+    question: "极速版的年付 8 折如何享受？",
+    answer: "在官方控制台选购极速版套餐时，计费周期选择“年付”，系统将自动应用 8 折优惠（仅需 240 元/年，折合每月 20 元）。此外还支持半年付 9 折、两年付 75 折及三年付 7 折。"
+  },
+  {
+    question: "企业定制版（680元/月）如何交付与部署？",
+    answer: "企业定制版属于高私密独立专线业务。在官方注册后，可直接联系专属技术客服说明目标业务（如特定国家跨境电商、TikTok 矩阵多机房推流、企业内网打通等），我们将在 2 小时内完成独立原生 IP 绑定与 IPLC 专线路由部署。"
+  }
+];
+
+// FAQPage Schema for Search Engines
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": pricingFaq.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+};
+---
+
+<Layout
+  title="套餐选购与规格对比 — NordVPN 官方专线网络"
+  description="NordVPN 官方授权专线套餐方案：致敬斯诺克147永久套餐、轻量版（年付99元）、极速版（全球IPLC专线）、定制版（独享原生IP独立带宽）。全系不限设备，VLESS 协议。"
+>
+  <!-- Pricing FAQ Structured Data -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <section class="site-container my-12">
+    <PageHeader
+      title="透明官方套餐选购，无套路倍率"
+      description="基于企业级 IEPL/IPLC 骨干专线与 VLESS 协议打造。全节点 ×1 倍率，不限同时在线设备数量。"
+    />
+  </section>
+
+  <!-- Pricing Cards -->
+  <PricingSection showHeader={false} />
+
+  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-8 site-container"></div>
+
+  <!-- Detailed Feature Comparison Table -->
+  <section class="site-container py-12 md:py-20" data-aos="fade-up-xs" data-aos-once="true">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <h2 class="text-3xl font-brand font-bold text-neutral-900 dark:text-neutral-50 mb-3">四大套餐全维度规格横评</h2>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+        清晰了解每个方案的带宽、线路、协议与适用场景，选择最适合您当前出海阶段的网络底座。
+      </p>
+    </div>
+
+    <div class="max-w-5xl mx-auto overflow-x-auto rounded-2xl border border-primary/15 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark p-4 sm:p-6 shadow-sm">
+      <table class="w-full text-xs sm:text-sm">
+        <thead>
+          <tr class="border-b border-dashed border-primary/20 dark:border-neutral-700">
+            <th class="text-left py-4 px-3 font-semibold text-neutral-500 dark:text-neutral-400 min-w-[140px]">规格参数</th>
+            <th class="text-center py-4 px-3 font-semibold text-neutral-800 dark:text-neutral-200 min-w-[130px]">致敬斯诺克147永久版</th>
+            <th class="text-center py-4 px-3 font-semibold text-neutral-800 dark:text-neutral-200 min-w-[130px]">轻量版</th>
+            <th class="text-center py-4 px-3 font-bold text-primary min-w-[140px] bg-primary/[0.04] dark:bg-primary/[0.08] rounded-t-lg">极速版 (推荐)</th>
+            <th class="text-center py-4 px-3 font-semibold text-neutral-800 dark:text-neutral-200 min-w-[140px]">定制版</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-dashed divide-primary/10 dark:divide-neutral-700/60">
+          {comparisonFeatures.map((row) => (
+            <tr class="hover:bg-primary/[0.02] dark:hover:bg-primary/[0.04] transition-colors">
+              <td class="py-3.5 px-3 font-medium text-neutral-700 dark:text-neutral-300">{row.name}</td>
+              <td class="py-3.5 px-3 text-center text-neutral-600 dark:text-neutral-400">{row.snooker}</td>
+              <td class="py-3.5 px-3 text-center text-neutral-600 dark:text-neutral-400">{row.light}</td>
+              <td class="py-3.5 px-3 text-center font-medium text-primary bg-primary/[0.04] dark:bg-primary/[0.08]">{row.speed}</td>
+              <td class="py-3.5 px-3 text-center text-neutral-600 dark:text-neutral-400">{row.custom}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Register CTA Button under Table -->
+    <div class="mt-8 text-center">
+      <Button
+        url={siteConfig.registerUrl}
+        target="_blank"
+        rel="nofollow sponsored noopener noreferrer"
+        type="fill"
+        className="text-base px-8 py-3.5 mx-auto font-bold"
+      >
+        <span>前往官方控制台开通套餐</span>
+        <ArrowRight class="w-4 h-4 ml-1" />
+      </Button>
+    </div>
+  </section>
+
+  <!-- Pricing FAQ -->
+  <section class="site-container py-12 md:py-20 border-t border-dashed border-primary/15 dark:border-neutral-800">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <h2 class="text-3xl font-brand font-bold text-neutral-900 dark:text-neutral-50 mb-3">套餐购买常见疑问</h2>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+        关于计费方式、流量刷新、设备连接与企业定制的详细说明。
+      </p>
+    </div>
+    <div class="max-w-3xl mx-auto">
+      {pricingFaq.map((item, index) => (
+        <AccordionItem question={item.question} answer={item.answer} index={index} />
+      ))}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,52 @@
+{
+	"name": "nordvpn-official-site",
+	"type": "module",
+	"version": "1.0.0",
+	"private": true,
+	"description": "NordVPN (nordvpn.world) official authorized enterprise dedicated line network landing page.",
+	"keywords": [
+		"nordvpn",
+		"nordvpn-world",
+		"iepl",
+		"iplc",
+		"vless",
+		"astro"
+	],
+	"author": {
+		"name": "NordVPN Official",
+		"email": "support@nordvpn.world",
+		"url": "https://nordvpn.world"
+	},
+	"engines": {
+		"node": ">=22.12.0",
+		"pnpm": ">=9"
+	},
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro check && astro build && node -e \"const fs=require('fs'); if(fs.existsSync('dist/sitemap-index.xml') && !fs.existsSync('dist/sitemap.xml')){ fs.copyFileSync('dist/sitemap-index.xml', 'dist/sitemap.xml'); console.log('Copied sitemap-index.xml -> sitemap.xml'); }\"",
+		"preview": "astro preview",
+		"astro": "astro",
+		"check": "biome check --apply-unsafe ."
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.9",
+		"@biomejs/biome": "1.7.3",
+		"@tailwindcss/typography": "^0.5.13",
+		"astro": "^6.4.2",
+		"postcss": "^8.4.31",
+		"tailwindcss": "^4.1.14",
+		"typescript": "^5.4.5",
+		"vite": "^7.3.3"
+	},
+	"dependencies": {
+		"@astrojs/mdx": "^6.0.1",
+		"@astrojs/rss": "^4.0.18",
+		"@astrojs/sitemap": "^3.7.3",
+		"@lucide/astro": "^1.17.0",
+		"@tailwindcss/vite": "^4.1.14",
+		"aos": "^2.3.4",
+		"motion": "^12.23.24",
+		"sharp": "^0.34.4"
+	}
+}

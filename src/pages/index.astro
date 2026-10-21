@@ -1,0 +1,456 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import HeroSection from "@/components/home/HeroSection.astro";
+import SectionHeader from "@/components/elements/SectionHeader.astro";
+import Pricing from "@/components/sections/Pricing.astro";
+import FAQ from "@/components/sections/FAQ.astro";
+import BlogSection from "@/components/sections/BlogSection.astro";
+import Button from "@/components/ui/Button.astro";
+import { siteConfig } from "@/config/site";
+import {
+  ShieldCheck, Zap, Lock, Cpu,
+  ArrowRight, Check,
+  Laptop, Wifi, Radio, Sparkles
+} from "@lucide/astro";
+
+// FAQ data
+const faqItems = [
+  {
+    question: "NordVPN（nordvpn.world）是什么定位？属于什么类型的网络服务？",
+    answer: "NordVPN（nordvpn.world）是自 2020 年起持续运营的综合型海外网络加速与企业专线品牌，获得官方正品授权。核心技术架构基于 <strong>IEPL 专线、企业级内网 IPLC 以及轻量低时延的 VLESS 协议</strong>。同时提供自研客户端与第三方客户端（Clash、Shadowrocket 等）通用订阅导入能力。定位兼顾稳定性、专线品质与高性价比，保障晚高峰 0 丢包。"
+  },
+  {
+    question: "轻量版套餐标注的“8.25元/月”是如何计算的？",
+    answer: "<strong>注意事项：</strong>8.25 元/月属于<strong>年付 99 元套餐折算后的平均月度成本</strong>（99元 ÷ 12个月 ≈ 8.25元/月），并非单独按月购买的单月价格。该套餐每月提供 69GB 原生稳定节点流量，非常适合日常办公、学术资料、邮件收发与轻度视频用户。"
+  },
+  {
+    question: "致敬斯诺克147永久套餐具体包含哪些权益？流量会过期吗？",
+    answer: "“致敬斯诺克147永久套餐”为一次性购买定价 147 元，提供 <strong>247GB 永久有效高速流量，无任何到期时间限制</strong>，用完为止。全节点单节点最高 2.5Gbps 带宽，覆盖香港×20、台湾×5、日本×10、新加坡×10、美国×10及英法德等全球节点，不限设备，是备用或轻度用户的长期刚需神器。"
+  },
+  {
+    question: "是否支持 OpenAI (ChatGPT)、Claude 3.5 及各类海外 AI 生产力工具？",
+    answer: "完全支持。NordVPN 节点覆盖原生纯净住宅与数据中心 IP，品牌线路针对常见 AI 工具（如 ChatGPT、Claude 3.5、Midjourney、Perplexity、Sora 等）进行全节点路由优化。建议在客户端中选择香港、日本、新加坡或美国原生节点以获得极速响应。"
+  },
+  {
+    question: "支持哪些海外流媒体与 TikTok 跨境直播业务？",
+    answer: "全系专线原生解锁 Netflix（全区）、Disney+、YouTube Premium、TikTok、HBO Max 等流媒体。针对跨境电商卖家（亚马逊、TikTok Shop、Shopify 店铺）与 TikTok 直播团队，极速版与定制版提供高纯净原生 IP 和超大上行带宽，确保直播推流流畅不掉帧。"
+  },
+  {
+    question: "如何使用客户端？是否支持 Clash 或 Shadowrocket（小火箭）？",
+    answer: "支持两类使用方式：① <strong>官方自研客户端</strong>：支持 Windows / macOS / Android / iOS，登录账号即可一键极速连接；② <strong>第三方通用客户端</strong>：支持直接复制订阅地址或扫描二维码导入 <strong>Clash、Shadowrocket、Sing-box、Surge、v2rayN</strong> 等流行工具。开通后控制台均附带图文教程，亦可联系官方客服一对一协助。"
+  },
+  {
+    question: "套餐是否限制客户端同时连接的设备数量？",
+    answer: "<strong>全系套餐均不限制设备同时在线数量！</strong>无论是个人手机、平板、笔记本电脑，还是家庭路由与团队办公设备，只要在流量额度范围内，均支持多端同时在线连接，无需额外付费购买设备席位。"
+  },
+  {
+    question: "企业定制版（680元/月）能提供哪些专属能力？",
+    answer: "企业定制版提供 <strong>按需独立部署的全 IPLC 专线通道</strong>，由技术团队线下 1 对 1 确认需求，为用户分配<strong>专属独享原生 IP 与独立保障带宽</strong>。流量、带宽、协议与地区（香港/日本/美国/新加坡等）均可自由配置，隔绝公网干扰，提供 7×24 专属技术运维支持。"
+  }
+];
+
+// 核心优势 6 大板块
+const coreAdvantages = [
+  {
+    icon: Zap,
+    title: "企业级 IEPL / IPLC 内网专线",
+    desc: "全链路跨境专用光纤内网传输，不过公网国际出口。晚高峰无视国际出口拥堵与 QoS 限速，低抖动、超低时延直达全球。"
+  },
+  {
+    icon: Lock,
+    title: "新一代 VLESS 协议架构",
+    desc: "采用更轻量、更高吞吐的 VLESS 协议。去除冗余握手开销，具备极强的网络抗干扰与防封锁能力，保障业务长周期稳定在线。"
+  },
+  {
+    icon: Laptop,
+    title: "自研客户端 + 通用订阅双支持",
+    desc: "提供全平台官方自研客户端，一键登录即连；同时深度兼容 Clash、Shadowrocket、Sing-box 等第三方客户端订阅导入。"
+  },
+  {
+    icon: Cpu,
+    title: "全主流 AI 生产力原生加速",
+    desc: "全节点持续优化对 ChatGPT、Claude 3.5、Midjourney、Google Gemini 等 AI 平台的路由策略，告别 IP 风控与频繁验证。"
+  },
+  {
+    icon: Radio,
+    title: "4K/8K 流媒体与 TikTok 全球直播",
+    desc: "完美支持 Netflix、Disney+、YouTube 4K/8K 极速秒开；为跨境电商团队与 TikTok 全球短视频直播提供高码率专属通道。"
+  },
+  {
+    icon: Wifi,
+    title: "全系套餐不限设备在线数量",
+    desc: "打破常规设备连接限制，手机、平板、Mac、PC、内网服务器可多端同时在线，适合个人多设备与中小跨境团队无门槛协作。"
+  }
+];
+
+// 全球核心节点分布数据
+const nodeRegions = [
+  {
+    region: "中国香港 (HK)",
+    count: "20+ 专线节点",
+    ping: "18 - 28 ms",
+    bandwidth: "最高 2.5 Gbps",
+    type: "IEPL 极速专线",
+    badge: "亚太首选",
+    desc: "超低时延直连大陆，适合日常外贸沟通、微信海外收发、跨境办公及轻度视频。"
+  },
+  {
+    region: "中国台湾 (TW)",
+    count: "5+ 专线节点",
+    ping: "32 - 45 ms",
+    bandwidth: "最高 2.5 Gbps",
+    type: "原生住宅 / BGP",
+    badge: "低延迟",
+    desc: "丰富流媒体库解锁，适合繁体中文业务、游戏联机以及地区性跨境商业运营。"
+  },
+  {
+    region: "日本东京/大阪 (JP)",
+    count: "10+ 专线节点",
+    ping: "35 - 50 ms",
+    bandwidth: "最高 2.5 Gbps",
+    type: "原生 IPLC 专线",
+    badge: "企业骨干",
+    desc: "日本亚马逊、乐天电商管理首选，支持 ChatGPT、日本本土 Netflix 与游戏极速加速。"
+  },
+  {
+    region: "新加坡 (SG)",
+    count: "10+ 专线节点",
+    ping: "45 - 65 ms",
+    bandwidth: "最高 2.5 Gbps",
+    type: "国际专线骨干",
+    badge: "出海核心",
+    desc: "东南亚跨境电商 Shopee、Lazada 与 TikTok 东南亚直播首选，国际路由枢纽节点。"
+  },
+  {
+    region: "美国洛杉矶/硅谷 (US)",
+    count: "10+ 专线节点",
+    ping: "115 - 138 ms",
+    bandwidth: "最高 2.5 Gbps",
+    type: "原生美国家庭IP",
+    badge: "AI 官方首选",
+    desc: "OpenAI、Anthropic AI 官方直连；亚马逊美国站、Shopify 独立站合规运营。"
+  },
+  {
+    region: "全球其他主流地区",
+    count: "欧洲/南美/东南亚",
+    ping: "智能多路由调度",
+    bandwidth: "最高 2.5 Gbps",
+    type: "动态高可用专线",
+    badge: "全覆盖",
+    desc: "覆盖英国、法国、德国、土耳其、泰国、巴西、马来西亚、越南等，按需智能切换。"
+  }
+];
+
+// 使用步骤
+const setupSteps = [
+  {
+    step: "01",
+    title: "开通官方授权套餐",
+    desc: "进入官方控制台注册账号，根据业务规模选择轻量版、极速版、永久版或企业定制版，秒级开通激活。"
+  },
+  {
+    step: "02",
+    title: "一键配置客户端",
+    desc: "可下载体验 NordVPN 官方自研全平台客户端，或一键复制订阅链接导入到 Clash、Shadowrocket、Sing-box 等通用软件。"
+  },
+  {
+    step: "03",
+    title: "极速畅享全球网络",
+    desc: "选择目标国家/地区低时延专线节点，点击连接，即可享受 2.5Gbps 峰值带宽与 99.98% 晚高峰高可用保障。"
+  }
+];
+
+// FAQPage Schema for Search Engines (Rich Results)
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer.replace(/<[^>]*>/g, '')
+    }
+  }))
+};
+---
+
+<Layout
+  title={siteConfig.meta.title}
+  description={siteConfig.meta.description}
+  keywords={siteConfig.meta.keywords}
+>
+  <!-- FAQ Structured Data -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <!-- 1. Hero 区域 -->
+  <HeroSection />
+
+  <!-- 2. 官方授权与可信指标条 (Trust & Proof Bar) -->
+  <section class="py-10 border-y border-dashed border-primary/15 dark:border-neutral-800 bg-bg-secondary/40 dark:bg-bg-secondary-dark/40 site-container" data-aos="fade-up-xs" data-aos-once="true">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+      <div class="p-2">
+        <div class="font-brand text-3xl md:text-4xl font-bold text-primary dark:text-primary-light">2020+</div>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">稳定运营服务年份</p>
+      </div>
+      <div class="p-2">
+        <div class="font-brand text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100">2.5 Gbps</div>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">单节点最高峰值带宽</p>
+      </div>
+      <div class="p-2">
+        <div class="font-brand text-3xl md:text-4xl font-bold text-emerald-600 dark:text-emerald-400">99.98%</div>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">晚高峰 SLA 可用率</p>
+      </div>
+      <div class="p-2">
+        <div class="font-brand text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100">不限设备</div>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">全平台客户端多端在线</p>
+      </div>
+      <div class="p-2 col-span-2 md:col-span-1">
+        <div class="font-brand text-3xl md:text-4xl font-bold text-primary dark:text-primary-light">IEPL / IPLC</div>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">企业内网专用骨干传输</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 产品核心优势 (Product Advantages) -->
+  <section id="features" class="py-16 md:py-24 site-container scroll-mt-20">
+    <SectionHeader
+      title="为什么选择 NordVPN 企业专线网络？"
+      description="拒绝廉价公网套路与晚高峰高丢包，以扎实的 IEPL/IPLC 骨干专线与新一代 VLESS 协议赋能真实业务。"
+    />
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+      {coreAdvantages.map((adv, i) => (
+        <div
+          class="p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 hover:border-primary/40 hover:shadow-lg transition-all duration-300"
+          data-aos="fade-up-sm"
+          data-aos-delay={i * 80}
+          data-aos-once="true"
+        >
+          <div class="w-12 h-12 rounded-xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center mb-5">
+            <adv.icon class="w-6 h-6" stroke-width={2} />
+          </div>
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2.5">{adv.title}</h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{adv.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 4. 全球原生节点覆盖分布 (Global Nodes Visualization) -->
+  <section class="py-16 md:py-20 site-container bg-bg-secondary/30 dark:bg-bg-secondary-dark/30 rounded-3xl border border-dashed border-primary/15 my-6">
+    <div class="px-4">
+      <SectionHeader
+        title="全球原生专线节点集群覆盖"
+        description="港/台/日/新/美/英/法/德/土/马/越 等全球多维节点覆盖，全线 ×1 倍率计费，单节点最高 2.5Gbps。"
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 max-w-6xl mx-auto">
+        {nodeRegions.map((node, i) => (
+          <div
+            class="p-5 rounded-xl border border-primary/10 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark hover:border-primary/30 transition-all duration-200"
+            data-aos="fade-up-xs"
+            data-aos-delay={i * 60}
+            data-aos-once="true"
+          >
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-bold text-base text-neutral-900 dark:text-neutral-100">{node.region}</span>
+              <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                {node.badge}
+              </span>
+            </div>
+
+            <div class="flex items-center gap-3 text-xs text-neutral-500 dark:text-neutral-400 mb-2.5 font-mono">
+              <span class="text-primary font-medium">{node.count}</span>
+              <span>•</span>
+              <span class="text-emerald-500 font-semibold">{node.ping}</span>
+              <span>•</span>
+              <span>{node.bandwidth}</span>
+            </div>
+
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              {node.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-8 text-center">
+        <Button url="/#pricing" type="solid" className="text-sm px-6 py-2.5 mx-auto">
+          <span>查看对应套餐与价格</span>
+          <ArrowRight class="w-4 h-4 ml-1" />
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 网络架构对比 (IPLC/IEPL 专线 vs 普通公网) -->
+  <section class="py-16 md:py-24 site-container">
+    <SectionHeader
+      title="为什么 IEPL 专线体验远超普通公网翻墙？"
+      description="从底层传输原理来看两者的核心差距，为重要出海与生产力业务选择值得托付的底层网络。"
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 max-w-5xl mx-auto">
+      <!-- Traditional Proxy Card -->
+      <div class="p-6 md:p-8 rounded-2xl border border-rose-500/20 bg-rose-500/[0.02] dark:bg-rose-500/[0.04]" data-aos="fade-right-sm" data-aos-once="true">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400 mb-4">
+          普通公网中转 / 直连机场
+        </div>
+        <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">公网国际出口网络</h3>
+        <ul class="space-y-3 text-sm text-neutral-600 dark:text-neutral-400">
+          <li class="flex items-start gap-2.5">
+            <span class="text-rose-500 font-bold">✕</span>
+            <span>晚高峰（20:00–23:30）公网出口拥堵，丢包率经常高达 15%–40%</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-rose-500 font-bold">✕</span>
+            <span>高网络抖动，视频频繁缓冲转圈，远程 SSH / 会议随时断连</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-rose-500 font-bold">✕</span>
+            <span>频繁遭遇 GFW 深度包检测干扰与节点大面积离线阻断</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-rose-500 font-bold">✕</span>
+            <span>廉价共享 IP 充斥风控记录，导致 ChatGPT 与 TikTok 账号封禁</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- NordVPN Dedicated IEPL Card -->
+      <div class="p-6 md:p-8 rounded-2xl border-2 border-primary bg-primary/[0.03] dark:bg-primary/[0.06] shadow-xl relative" data-aos="fade-left-sm" data-aos-once="true">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-primary text-white mb-4">
+          <Sparkles class="w-3.5 h-3.5" /> NordVPN 企业级 IEPL / IPLC 专线
+        </div>
+        <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">端到端内网专线骨干</h3>
+        <ul class="space-y-3 text-sm text-neutral-700 dark:text-neutral-200">
+          <li class="flex items-start gap-2.5">
+            <Check class="w-5 h-5 text-emerald-500 flex-shrink-0" stroke-width={2.5} />
+            <span>走跨境海底光缆企业专用通道，晚高峰 0 丢包，保障 99.98% SLA</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <Check class="w-5 h-5 text-emerald-500 flex-shrink-0" stroke-width={2.5} />
+            <span>网络抖动 &lt; 2ms，单节点最高 2.5Gbps 带宽，4K/8K 与直播秒开</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <Check class="w-5 h-5 text-emerald-500 flex-shrink-0" stroke-width={2.5} />
+            <span>新一代 VLESS 协议无缝过载，轻量低计算开销，杜绝干扰与屏蔽</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <Check class="w-5 h-5 text-emerald-500 flex-shrink-0" stroke-width={2.5} />
+            <span>优质原生住宅与商业节点 IP，保障 AI 工具与跨境电商店铺纯净安全</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 使用流程 (How to Use / Setup Steps) -->
+  <section id="setup" class="py-16 md:py-24 site-container scroll-mt-20">
+    <SectionHeader
+      title="三步极速上手，开启全球网络互联"
+      description="无论是新手用户还是专业技术团队，均可在 3 分钟内轻松完成配置并极速连接。"
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
+      {setupSteps.map((s, i) => (
+        <div
+          class="relative p-6 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/15 dark:border-neutral-700"
+          data-aos="fade-up-sm"
+          data-aos-delay={i * 100}
+          data-aos-once="true"
+        >
+          <div class="text-4xl font-brand font-bold text-primary/30 dark:text-primary/40 mb-3">
+            {s.step}
+          </div>
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2">{s.title}</h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Client Compatibility Icons Row -->
+    <div class="mt-12 text-center" data-aos="fade-up-xs" data-aos-once="true">
+      <p class="text-xs font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-4">
+        支持的客户端与系统平台
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-neutral-600 dark:text-neutral-300">
+        <span class="px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">官方自研客户端 (Win/Mac/Android/iOS)</span>
+        <span class="px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">Clash Verge / Clash Meta</span>
+        <span class="px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">Shadowrocket (小火箭)</span>
+        <span class="px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-bg-secondary dark:bg-bg-secondary-dark">Sing-box / v2rayN / Surge</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
+
+  <!-- 7. 套餐选购卡片 (Pricing Section) -->
+  <Pricing />
+
+  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
+
+  <!-- 8. 常见问题 (FAQ Section) -->
+  <FAQ
+    title="常见问题解答 (FAQ)"
+    description="针对专线品质、晚高峰保障、套餐计费与客户端支持的真实透明解答"
+    items={faqItems}
+  />
+
+  <!-- 9. 知识库与 SEO 指南文章 (Latest SEO Articles / Knowledge Base) -->
+  <div class="py-16 md:py-20">
+    <BlogSection
+      title="官方知识库与实用专线教程"
+      description="了解 VLESS 协议原理、跨境电商原生 IP 配置技巧与客户端使用指南"
+    />
+  </div>
+
+  <!-- 10. 底部最终行动号召 (Final CTA) -->
+  <section class="py-12 md:py-20 site-container rounded-3xl bg-gradient-to-br from-primary/[0.08] via-bg-secondary to-bg-secondary dark:from-primary/[0.12] dark:via-bg-secondary-dark dark:to-bg-secondary-dark border border-primary/20 shadow-lg" data-aos="fade-up-xs" data-aos-once="true">
+    <div class="max-w-3xl mx-auto text-center px-4">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary dark:bg-primary/20 mb-4">
+        <ShieldCheck class="w-4 h-4" /> 2020年起稳定运营 · 官方授权正品保障
+      </span>
+      <h2 class="text-3xl md:text-4xl font-brand font-bold mb-4 text-neutral-900 dark:text-neutral-50">
+        即刻接入 NordVPN 全球企业级高速网络
+      </h2>
+      <p class="text-neutral-600 dark:text-neutral-300 mb-8 leading-relaxed text-sm md:text-base">
+        全系支持 IEPL/IPLC 专线与 VLESS 协议，最高 2.5Gbps 峰值带宽，不限设备在线，晚高峰超低时延 0 丢包。
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <Button
+          url={siteConfig.registerUrl}
+          type="fill"
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          className="text-base px-8 py-3.5 font-bold"
+        >
+          <span>立即前往官方注册开通</span>
+          <ArrowRight size={18} />
+        </Button>
+        <Button url="/#pricing" className="text-base px-8 py-3.5">
+          <span>选购套餐方案</span>
+        </Button>
+      </div>
+
+      <!-- Invite Code Badge in Final CTA -->
+      <div class="mt-5 flex flex-wrap items-center justify-center gap-2 text-xs">
+        <span class="text-neutral-500 dark:text-neutral-400">官方授权注册邀请码：</span>
+        <button
+          type="button"
+          class="invite-copy-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-300 dark:border-neutral-700 font-mono font-bold tracking-wider cursor-pointer hover:border-primary/50 transition-colors shadow-sm"
+          data-code={siteConfig.inviteCode}
+          title="点击复制邀请码"
+        >
+          <span class="text-primary dark:text-primary-light font-extrabold">{siteConfig.inviteCode}</span>
+          <span class="copy-hint text-[11px] font-normal text-neutral-400 ml-0.5">点击复制</span>
+        </button>
+        <span class="text-[11px] text-neutral-400 dark:text-neutral-500">（进入调度系统已自动绑定）</span>
+      </div>
+      <p class="text-xs text-neutral-400 dark:text-neutral-500 mt-4">
+        注册后即可直接在官方控制台获取自研客户端或订阅链接 · 7×24 技术客服随时待命
+      </p>
+    </div>
+  </section>
+
+</Layout>
